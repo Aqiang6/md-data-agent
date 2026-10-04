@@ -120,7 +120,7 @@ The shared core owns manifests, generation-qualified role selection, workspace s
 | [`src/manifest.ts`](src/manifest.ts) | Closed `snapshot.yml` schema, collection, and ownership rules |
 | [`src/session-files.ts`](src/session-files.ts) | Canonical parent/child generation grammar, header agreement, and highest-role selection |
 | [`src/identity.ts`](src/identity.ts) | Typed first-seen identity tokenization across parent and child logs |
-| [`src/normalize.ts`](src/normalize.ts) | Pure normalizers and scrubbing helpers |
+| [`src/normalize.ts`](src/normalize.ts) | Pure normalization and scrubbing; volatile Data Agent request digests become `{{requestSha256}}`, other digests remain exact |
 | [`src/workspace.ts`](src/workspace.ts) | Scenario workspace setup and complete expected-state comparison |
 | [`src/suite.ts`](src/suite.ts) | Scenario-table suite factory, fixture guards, record/refresh write-back |
 | [`src/index.ts`](src/index.ts) | Package entry re-exporting the four layers |

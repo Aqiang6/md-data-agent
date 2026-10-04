@@ -1,77 +1,39 @@
-# DeepSeek Harness
+# MD Data Agent
 
 English | [中文](README.zh.md)
 
-DeepSeek Harness (`dsh`) is an open-source agent harness developed by [DeepSeek AI](https://deepseek.com).
+A database analysis assistant built on [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) and Cordis. It reads schema and business Markdown with the same file tools, clarifies ambiguous metrics, runs SQL, and preserves prompts, tool calls and results in a trace you can inspect.
 
-It is built on an **everything-is-a-plugin** architecture and powered by [Cordis](https://github.com/cordiverse/cordis), whose design is described in [_A Programming Paradigm for Spatiotemporal Composability_](https://arxiv.org/abs/2608.25512).
+<a id="run"></a>
 
-Documentation: [https://deepseek-harness.github.io/deepseek-harness/](https://deepseek-harness.github.io/deepseek-harness/)
-
-## Developer preview
-
-DeepSeek Harness is in _developer preview_ and iterating rapidly. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
-
-Review the [safety notice](SAFETY.md) before running the project.
+<a id="run-from-source"></a>
 
 ## Run
 
-### Run from `npm`
-
-Install `Node.js`, then run:
+Install Node.js `^22.19.0 || >=24.0.0` and pnpm `11.7.0`. On Windows, run `start.bat` to install dependencies, build missing artifacts and launch the dedicated Data Agent profile. For an explicit source setup:
 
 ```sh
-npx @deepseek-ai/dsh web
-```
-
-The command starts the Web UI at `http://127.0.0.1:3080` by default and opens it in the default browser for a local launch. An SSH launch only prints the host URL because the SSH client or editor owns the local forwarded address. Pass `--no-open` to run the server without opening a browser. See [Web UI guide](docs/user/guide/index.md).
-
-### Run from source
-
-To run from a repository checkout:
-
-```sh
-git clone https://github.com/deepseek-ai/deepseek-harness.git
-cd deepseek-harness
 pnpm install
 pnpm run build
-pnpm dsh web
+pnpm --filter dataagent-ui run build
+pnpm exec tsx scripts/prepare-data-agent-profile.ts
+pnpm dsh --profile data-agent
 ```
 
-`pnpm run build` prepares the repository artifacts. `pnpm dsh web` uses those built artifacts without rebuilding.
+The initial profile offers the official DeepSeek models and selects DeepSeek Flash. Configure your API key in Models & API, or copy `.env.example` to `.env` and fill in `DEEPSEEK_API_KEY`. Profile preparation preserves later model choices.
 
-## Community and support
+Connect your database and provide its schema and business Markdown through source management. The repository includes no personal connection, database, business corpus or API key. See [Data Agent UI](apps/dataagent-ui/README.md) for the workspace and [Data Agent configuration](packages/experimental/data-agent/README.md) for source permissions and document binding.
 
-- Submit feedback or bug reports through [GitHub Discussions](https://github.com/deepseek-ai/deepseek-harness/discussions).
-- Add the [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic to your plugin repository for discoverability.
-- Join <a href="https://discord.gg/Ycq5dCaS4">DeepSeek Harness Discord community</a>.
+## Repository contents
 
-## Contributing
+The runnable Harness workspaces, vendored Cordis, build scripts and regression fixtures stay together. Local credentials, databases, business documents, generated bundles, browser recordings and benchmark runs are ignored. Official BIRD and Spider benchmark resources and runs are maintained separately from this checkout.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+Before committing, run `pnpm run check:git-files`. The commit hook rejects ignored files that were forcibly added to the Git index; this check does not scan earlier Git history or determine whether arbitrary source text contains secrets.
 
 ## Development
 
-Start with the [development guide](docs/development.md) and [architecture documentation](docs/architecture.md).
-
-`pnpm run dev:web` builds, serves, and rebuilds client bundles on source edits in one terminal, and `make help` lists the matching Make targets for Web and Desktop; the guide's application commands section owns the full table.
-
-For agents, follow [AGENTS.md](AGENTS.md).
-
-## Citation
-
-```bibtex
-@misc{deepseek-harness2026,
-  title={DeepSeek Harness: Everything is a Plugin},
-  author={DeepSeek-AI},
-  year={2026},
-  publisher={GitHub},
-  howpublished={\url{https://github.com/deepseek-ai/deepseek-harness}},
-}
-```
+Start with [architecture](docs/architecture.md), [development](docs/development.md) and [AGENTS.md](AGENTS.md). This repository extends DeepSeek Harness; upstream framework source remains under its original package names and license.
 
 ## License
 
-[MIT](LICENSE)
-
-Third-party dependencies and their licenses are disclosed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+[MIT](LICENSE). Dependency licenses are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

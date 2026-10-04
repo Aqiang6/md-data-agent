@@ -1,0 +1,242 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`loads the domain independently of Web, reads schema MD, queries, reports and commits the final submission 1`] = `"[[{"type":"text","text":"You are an AI agent powered by DeepSeek Harness.\\n\\nUse the find tool — not shell find — to discover files by path pattern.\\n\\nUse the grep tool — not shell grep or rg — to search file contents. Use read on a matched file when you need surrounding context.\\n\\n分析前用 read 逐一阅读当前库已提供的全部结构和业务资料。\\n\\n用户和资料均未明确指标口径，且不同合理定义会影响结果时，必须用 ask 澄清并等待回答，再进行该指标的查询和计算。不得自行采用行业惯例、默认假设，或用事后说明代替确认。来源不明时也须澄清；已明确的条件不重复询问。\\n\\n用 sql 只读查询。检查预览和总行数，完整数据按返回路径 read，不用预览推算总体。\\n\\n结论保留业务名称，说明依据和限制；需要报告时向 report 提交完整 Markdown，修改时也提交全文。\\n\\n数据库：shop.db（SQLite）\\n- schema.md：source-1/schema/schema.md\\n\\n资料目录： <fixture-root>/evidence/data-loader/knowledge/65ceac5ef60293585ed29768d718003b7d78548853064de92e3d59ef86820221\\n\\n上述文件相对于资料目录，read 时拼接为完整路径。"}]]"`;
+
+exports[`records the general tools, rejects removed calls and completes SQL analysis with a report 1`] = `
+[
+  {
+    "description": "Ask the user a concise question when you need confirmation, a choice, or missing information before proceeding.",
+    "name": "ask",
+    "parameters": {
+      "properties": {
+        "questions": {
+          "description": "Questions to ask the user before continuing.",
+          "items": {
+            "additionalProperties": true,
+            "properties": {
+              "header": {
+                "description": "Optional short heading for the question, such as "Confirm" or "Choose Mode".",
+                "type": "string",
+              },
+              "id": {
+                "description": "Stable id for this question; echoed in the answer.",
+                "type": "string",
+              },
+              "multi_select": {
+                "description": "Whether the user may select more than one option. Defaults to false.",
+                "type": "boolean",
+              },
+              "options": {
+                "description": "Optional choices to show the user. If you recommend one, put it first and append "(Recommended)" to that label.",
+                "items": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "description": {
+                      "description": "One sentence explaining the tradeoff or impact.",
+                      "type": "string",
+                    },
+                    "label": {
+                      "description": "Short user-facing option label.",
+                      "type": "string",
+                    },
+                  },
+                  "required": [
+                    "label",
+                  ],
+                  "type": "object",
+                },
+                "type": "array",
+              },
+              "question": {
+                "description": "The specific question to ask the user.",
+                "type": "string",
+              },
+            },
+            "required": [
+              "id",
+              "question",
+            ],
+            "type": "object",
+          },
+          "type": "array",
+        },
+      },
+      "required": [
+        "questions",
+      ],
+      "type": "object",
+    },
+  },
+  {
+    "description": "Submit the verified final SQL for BIRD/Spider benchmark evaluation, with an optional answer. This records the prediction; it does not score it.",
+    "name": "benchmark",
+    "parameters": {
+      "properties": {
+        "answer": {
+          "type": "string",
+        },
+        "sql": {
+          "description": "Final SQL for the evaluation case.",
+          "type": "string",
+        },
+      },
+      "required": [
+        "sql",
+      ],
+      "type": "object",
+    },
+  },
+  {
+    "description": "Find files, not directories, whose paths match a glob pattern, including hidden and ignored files. Returns up to 100 paths in modification-time order; a larger result keeps the first paths and reports where the complete list was saved.",
+    "name": "find",
+    "parameters": {
+      "properties": {
+        "path": {
+          "description": "Directory to search in. Defaults to the session workspace; a relative path resolves against it.",
+          "type": "string",
+        },
+        "pattern": {
+          "description": "Glob pattern to match file paths against (e.g. "**/*.ts", "src/**/*.test.js"). A pattern with no "/" matches the basename at any depth, so "*" and "*.ts" both search the whole tree; include a separator to anchor the depth.",
+          "type": "string",
+        },
+      },
+      "required": [
+        "pattern",
+      ],
+      "type": "object",
+    },
+  },
+  {
+    "description": "Search file contents with a ripgrep regular expression. Returns matching lines with line numbers, grouped by file. Returns up to 250 matches; a larger result reports where the complete match list was saved.",
+    "name": "grep",
+    "parameters": {
+      "properties": {
+        "include": {
+          "description": "One glob filter for which files to search (e.g. "*.ts", "*.{js,jsx}"). Not a list; negation is not supported.",
+          "type": "string",
+        },
+        "path": {
+          "description": "File or directory to search. Defaults to the session workspace; a relative path resolves against it.",
+          "type": "string",
+        },
+        "pattern": {
+          "description": "Regular expression to search for (ripgrep syntax).",
+          "type": "string",
+        },
+      },
+      "required": [
+        "pattern",
+      ],
+      "type": "object",
+    },
+  },
+  {
+    "description": "List the immediate files and directories at a path.",
+    "name": "ls",
+    "parameters": {
+      "properties": {
+        "path": {
+          "description": "Defaults to the session working directory.",
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+  },
+  {
+    "description": "Read a text file and return line-numbered content.",
+    "name": "read",
+    "parameters": {
+      "properties": {
+        "encoding": {
+          "description": "Text encoding. Defaults to utf-8; use windows-1252 for Western legacy text.",
+          "enum": [
+            "utf-8",
+            "windows-1252",
+          ],
+          "type": "string",
+        },
+        "file_path": {
+          "description": "Path to read, resolved by the filesystem backend.",
+          "type": "string",
+        },
+        "limit": {
+          "description": "Maximum number of lines to return. Defaults to 2000.",
+          "type": "number",
+        },
+        "offset": {
+          "description": "1-based first line to return. Defaults to 1.",
+          "type": "number",
+        },
+      },
+      "required": [
+        "file_path",
+      ],
+      "type": "object",
+    },
+  },
+  {
+    "description": "Create a report from Markdown content as downloadable Markdown, HTML or PDF. Each call saves a new revision.",
+    "name": "report",
+    "parameters": {
+      "properties": {
+        "formats": {
+          "items": {
+            "enum": [
+              "md",
+              "html",
+              "pdf",
+            ],
+            "type": "string",
+          },
+          "type": "array",
+        },
+        "language": {
+          "type": "string",
+        },
+        "markdown": {
+          "description": "Complete report content, including verified values and tables.",
+          "type": "string",
+        },
+        "title": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "markdown",
+        "title",
+        "formats",
+      ],
+      "type": "object",
+    },
+  },
+  {
+    "description": "Run a read-only SQL statement. Returns a row preview and a file containing the complete result.",
+    "name": "sql",
+    "parameters": {
+      "properties": {
+        "database": {
+          "description": "Source from the session context; defaults to the selected database.",
+          "type": "string",
+        },
+        "params": {
+          "description": "Positional parameter values.",
+          "items": {},
+          "type": "array",
+        },
+        "sql": {
+          "type": "string",
+        },
+        "timeoutMs": {
+          "description": "Execution timeout in milliseconds; 0 disables the timeout.",
+          "type": "integer",
+        },
+      },
+      "required": [
+        "sql",
+      ],
+      "type": "object",
+    },
+  },
+]
+`;

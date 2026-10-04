@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "sources": [
+    {
+      "database": "shop.db",
+      "documents": [{ "filename": "schema.md", "category": "schema" }]
+    }
+  ]
+}

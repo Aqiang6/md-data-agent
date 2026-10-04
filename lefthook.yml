@@ -4,6 +4,9 @@
 
 pre-commit:
   jobs:
+    - name: public Git files
+      run: node scripts/check-git-public-files.mjs
+
     - name: translation pairing (staged records)
       glob: '*.i18n.yaml'
       exclude:

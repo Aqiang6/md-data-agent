@@ -78,10 +78,18 @@ function applyEvent(trace: WorkflowTrace, event: SessionEvent, fail: InvariantFa
   const runId = stringId(data.runId, `${event.type} runId`, fail)
 
   switch (event.type) {
+    case 'tool-workflow/phase':
+    case 'tool-workflow/log': {
+      openRun(trace, runId, event.type, fail)
+      const field = event.type === 'tool-workflow/phase' ? 'title' : 'message'
+      if (typeof data[field] !== 'string') fail(`${event.type} ${field} must be a string`)
+      return
+    }
     case 'tool-workflow/run-start': {
       if (typeof data.name !== 'string' || data.name.length === 0) {
         fail('tool-workflow/run-start name must be a non-empty string')
       }
+      if (data.callId !== undefined) stringId(data.callId, 'tool-workflow/run-start callId', fail)
       if (trace.has(runId)) fail(`tool-workflow/run-start repeats run ${runId}`)
       trace.set(runId, { ended: false, members: new Map() })
       return

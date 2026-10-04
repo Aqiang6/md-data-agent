@@ -1,0 +1,10 @@
+version: 1
+scenario: data-agent-tools
+profile: sdk
+composition: sdk-data-agent-tools
+recording: authored
+header:
+  class: data-agent-tools
+  pin: true
+workspace:
+  final: true

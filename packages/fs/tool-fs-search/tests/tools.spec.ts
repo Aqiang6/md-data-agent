@@ -241,6 +241,29 @@ function matchLine(path: string, lineNumber: number, lineText: string): string {
 }
 
 describe('registration', () => {
+  it('registers a renamed discovery tool with matching guidance, cards and complete-result spill', async () => {
+    const { ctx, subprocess, spill, fiber } = await setup({
+      config: { globToolName: 'find', globMaxResults: 2, sampleOverCapGlobResults: false }, spill: true,
+    })
+    expect(ctx.tools.schemas().map(schema => schema.name).sort()).toEqual(['find', 'grep'])
+    expect(renderPrompt(await ctx.systemPrompt.assemble())).toContain('Use the find tool')
+    expect(ctx.tools.get('find')?.presentCall?.({ pattern: '*.md' })).toMatchObject({ title: 'Find *.md' })
+    subprocess.handler = () => runResult('a.md\nb.md\nc.md\n')
+    const result = await call(ctx, 'find', { pattern: '*.md' }, { agent: agent('/w') })
+    expect(result.isError).toBe(false)
+    expect(text(result)).toContain('Full sorted result stored at: /spill/glob-results.txt')
+    expect(spill?.saves).toMatchObject([{
+      content: 'a.md\nb.md\nc.md', source: { toolName: 'find' },
+    }])
+    await fiber.dispose()
+    expect(ctx.tools.schemas()).toEqual([])
+    expect((await ctx.systemPrompt.assemble()).sections.map(section => section.name)).not.toContain('tool:find')
+  })
+
+  it.each(['', ' ', 'grep'])('rejects the invalid discovery name %j before registering tools', async (globToolName) => {
+    await expect(setup({ config: { globToolName } })).rejects.toThrow('globToolName must be nonblank and differ from grep')
+  })
+
   it('registers glob and grep unconditionally with their prompt sections', async () => {
     const { ctx, subprocess } = await setup()
     // Registration performs NO load-time probe: the packaged binary is always

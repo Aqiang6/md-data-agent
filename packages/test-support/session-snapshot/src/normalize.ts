@@ -338,6 +338,8 @@ export function normalizeStdout(
  * scrubbed. Projected inputs remain
  * projected. Packed `data.dt` gaps are normalized even when the projected row
  * omits its `time0` anchor.
+ * Data Agent request digests receive a stable token because their bytes include
+ * volatile request paths and identities; other content digests remain exact.
  * Output is JSONL in the same shape as the input — one compact record per
  * line.
  *
@@ -383,6 +385,10 @@ export function normalizeSessionLog(
     if (record.type === 'hook/result' && record.data !== null && typeof record.data === 'object') {
       const data = record.data as Record<string, unknown>
       if ('durationMs' in data) data.durationMs = 0
+    }
+    if (record.type === 'data-agent/request' && record.data !== null && typeof record.data === 'object') {
+      const data = record.data as Record<string, unknown>
+      if (typeof data.sha256 === 'string' && /^[a-f0-9]{64}$/.test(data.sha256)) data.sha256 = '{{requestSha256}}'
     }
     normalizeFeedbackClocks(record)
     if (record.type === 'goal/change' && record.data !== null && typeof record.data === 'object') {

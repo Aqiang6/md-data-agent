@@ -24,6 +24,9 @@
       "path": "../../core/agent"
     },
     {
+      "path": "../../preset/agent-preset-registry"
+    },
+    {
       "path": "../../attachment/attachment"
     },
     {

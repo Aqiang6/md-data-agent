@@ -1,0 +1,4 @@
+- id: tool-bash
+  disabled: true
+- id: tool-pwsh
+  disabled: true

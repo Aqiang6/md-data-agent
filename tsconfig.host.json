@@ -416,6 +416,7 @@
     { "path": "./packages/test-support/loader-smoke" },
     { "path": "./packages/test-support/llm-mock-server" },
     { "path": "./packages/experimental/webworker-packer" },
+    { "path": "./packages/experimental/data-agent/tsconfig.host.json" },
     { "path": "./packages/experimental/inspector/tsconfig.host.json" },
     { "path": "./packages/subagent/subagent" },
     { "path": "./packages/subagent/tool-subagent" },

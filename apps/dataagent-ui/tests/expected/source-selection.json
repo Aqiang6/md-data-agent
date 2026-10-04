@@ -1,0 +1,67 @@
+{
+  "records": [
+    {
+      "type": "event",
+      "event": {
+        "type": "permission/preset",
+        "seq": 0,
+        "time": 1791039658625,
+        "data": {
+          "preset": "workspace-write"
+        }
+      }
+    },
+    {
+      "type": "event",
+      "event": {
+        "type": "sandbox/mode",
+        "seq": 1,
+        "time": 1791039658628,
+        "data": {
+          "mode": "workspace-write"
+        }
+      }
+    },
+    {
+      "type": "event",
+      "event": {
+        "type": "approval/policy",
+        "seq": 2,
+        "time": 1791039658628,
+        "data": {
+          "policy": "ask"
+        }
+      }
+    },
+    {
+      "type": "event",
+      "event": {
+        "type": "command/run",
+        "seq": 3,
+        "time": 1791039658657,
+        "data": {
+          "commandId": "cmd-a13eb2c9-1",
+          "name": "db",
+          "args": " shop.db",
+          "source": {
+            "kind": "user"
+          }
+        }
+      }
+    },
+    {
+      "type": "event",
+      "event": {
+        "type": "command/done",
+        "seq": 4,
+        "time": 1791039658658,
+        "data": {
+          "commandId": "cmd-a13eb2c9-1",
+          "kind": "success",
+          "text": "已选择数据库：shop.db"
+        }
+      }
+    }
+  ],
+  "hasMore": false
+}

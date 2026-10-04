@@ -1,0 +1,10 @@
+# Bilingual-pair consistency record for data-agent.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/data-agent.md
+/data-agent:
+  en: 9dd0ba9f5efd3bec
+  zh: 788148c6b4ee1cbc
+/data-agent/scope-and-restoration:
+  en: 22f3c762128c6844
+  zh: cd0fd0ba484a6024

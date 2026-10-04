@@ -6,6 +6,7 @@
  */
 
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
+import type { ToolCallId } from '@deepseek-ai/dsh-llm'
 import type {
   WorkflowAgentOutcome, WorkflowRunId, WorkflowStopReason,
 } from '@deepseek-ai/dsh-workflow/types'
@@ -14,6 +15,8 @@ import type {
 export interface ToolWorkflowRunStartData {
   readonly runId: WorkflowRunId
   readonly name: string
+  /** Calling root tool; absent in historical records without this association. */
+  readonly callId?: ToolCallId
 }
 
 /** Records one workflow member after its child Session is published. */
@@ -40,6 +43,10 @@ export interface ToolWorkflowRunEndData {
 
 declare module '@deepseek-ai/dsh-session/types' {
   interface SessionEventMap {
+    /** Informational progress phase; never declares execution dependencies. */
+    'tool-workflow/phase': { readonly runId: WorkflowRunId; readonly title: string }
+    /** Informational workflow progress message. */
+    'tool-workflow/log': { readonly runId: WorkflowRunId; readonly message: string }
     /**
      * Opens one top-level workflow record.
      * @param data - stable run identity and display name.

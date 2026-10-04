@@ -6419,6 +6419,227 @@
       }
     },
     {
+      "key": "event:data-agent/request",
+      "kind": "event",
+      "event": "data-agent/request",
+      "surface": false,
+      "digest": "622f940fe36d3cd4f9ce377478111088b159c987d58e41bd8886153d3eae5986",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "attempt",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "inputThroughSeq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "requestId",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "sha256",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "step",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "data-agent/request"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:data-agent/request-end",
+      "kind": "event",
+      "event": "data-agent/request-end",
+      "surface": false,
+      "digest": "1451d96ca792749c1ea9e711ca6c205ae87f5c06a68aca887d720120a0e51778",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 5,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "error",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "finish",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "requestId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "status",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "usage",
+                "type": 3,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "cacheReadTokens",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "cacheWriteTokens",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "inputTokens",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "outputTokens",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "reasoningTokens",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "totalTokens",
+                "type": 4,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "data-agent/request-end"
+          }
+        ]
+      }
+    },
+    {
       "key": "event:deliverables/presented",
       "kind": "event",
       "event": "deliverables/presented",
@@ -16930,6 +17151,156 @@
       }
     },
     {
+      "key": "event:tool-workflow/log",
+      "kind": "event",
+      "event": "tool-workflow/log",
+      "surface": false,
+      "digest": "d1a76ca217758d3ffe98fa1a5edbe84d754b66228cd9436ef2fd8c4de38e1886",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "message",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "runId",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "tool-workflow/log"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:tool-workflow/phase",
+      "kind": "event",
+      "event": "tool-workflow/phase",
+      "surface": false,
+      "digest": "49d14928d15c22e1caaab450eb5e0df37bd0165d0c2d460cbff8cdea371aa28b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "runId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "title",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "tool-workflow/phase"
+          }
+        ]
+      }
+    },
+    {
       "key": "event:tool-workflow/run-end",
       "kind": "event",
       "event": "tool-workflow/run-end",
@@ -17029,7 +17400,7 @@
       "kind": "event",
       "event": "tool-workflow/run-start",
       "surface": false,
-      "digest": "c1f9e0405de6d18cabb9ee70782a027f9bbdc57e5abec9dcccdd56119e2e9058",
+      "digest": "fa979c353d6662370278ebad515bd45254413c2a7c60618d9f4f0413ac2ef42c",
       "schema": {
         "root": 0,
         "nodes": [
@@ -17067,6 +17438,11 @@
           {
             "kind": "object",
             "properties": [
+              {
+                "name": "callId",
+                "type": 2,
+                "optional": true
+              },
               {
                 "name": "name",
                 "type": 2,
@@ -25480,6 +25856,130 @@
       "sources": []
     },
     {
+      "digest": "1451d96ca792749c1ea9e711ca6c205ae87f5c06a68aca887d720120a0e51778",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 5,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "error",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "finish",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "requestId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "status",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "usage",
+                "type": 3,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "cacheReadTokens",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "cacheWriteTokens",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "inputTokens",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "outputTokens",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "reasoningTokens",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "totalTokens",
+                "type": 4,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "data-agent/request-end"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "1506a9b8224986c83015ae99d2cb5ede705538c58c063d6a48ef6d761a31ba6c",
       "schema": {
         "root": 0,
@@ -29407,6 +29907,93 @@
       "names": [],
       "sources": [
         "packages/core/session/src/types.ts:427"
+      ]
+    },
+    {
+      "digest": "18c6ac31c078e58ad36f14843d4d3462afc3a13b8e63ecbfb54851736d71882b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "error",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "finish",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "requestId",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "status",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "usage",
+                "type": 2,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "cacheReadTokens",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "cacheWriteTokens",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "inputTokens",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "outputTokens",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "reasoningTokens",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "totalTokens",
+                "type": 3,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          }
+        ]
+      },
+      "names": [],
+      "sources": [
+        "packages/experimental/data-agent/src/trace.ts:69"
       ]
     },
     {
@@ -43945,6 +44532,79 @@
       "sources": []
     },
     {
+      "digest": "49d14928d15c22e1caaab450eb5e0df37bd0165d0c2d460cbff8cdea371aa28b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "runId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "title",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "tool-workflow/phase"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "49dab019d00e8c26f27ad2ccff7b604d69e323ae4d17e0d2a7b6b8a830b1ade2",
       "schema": {
         "root": 0,
@@ -44735,6 +45395,7 @@
         "packages/experimental/agent-team/src/types.ts#TeamId",
         "packages/experimental/agent-team/src/types.ts#TeamMessageId",
         "packages/experimental/agent-team/src/types.ts#TeamTaskId",
+        "packages/experimental/data-agent/src/brand.ts#RequestId",
         "packages/feedback/message-feedback/src/types.ts#MessageFeedbackVersion",
         "packages/goal/goal/src/types.ts#GoalId",
         "packages/interaction/commands/src/brand.ts#CommandId",
@@ -44760,6 +45421,7 @@
         "packages/experimental/agent-team/src/types.ts:20",
         "packages/experimental/agent-team/src/types.ts:32",
         "packages/experimental/agent-team/src/types.ts:8",
+        "packages/experimental/data-agent/src/brand.ts:11",
         "packages/feedback/message-feedback/src/types.ts:14",
         "packages/goal/goal/src/types.ts:17",
         "packages/interaction/commands/src/brand.ts:31",
@@ -44776,6 +45438,62 @@
         "packages/webhook/webhook/src/brand.ts:6",
         "packages/webhook/webhook/src/brand.ts:9",
         "packages/workflow/workflow/src/types.ts:13"
+      ]
+    },
+    {
+      "digest": "4d49141f51a8b39e4806c7cfe78ee0612c9df4150eaf13f9b5333a44bfba12ce",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "attempt",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "inputThroughSeq",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "requestId",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "sha256",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "step",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [],
+      "sources": [
+        "packages/experimental/data-agent/src/trace.ts:60"
       ]
     },
     {
@@ -49873,6 +50591,20 @@
       "sources": []
     },
     {
+      "digest": "55f3a229c9064562d013be6795bfda9365533124dd20d56ed54c311d36a294b7",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "data-agent/request-end"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "5654685d7557ec747e74887237065e626a5bdfa426ca43f7fbb0b6fee9b0916c",
       "schema": {
         "root": 0,
@@ -51598,6 +52330,99 @@
           {
             "kind": "literal",
             "value": "tool-call-chunks"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "622f940fe36d3cd4f9ce377478111088b159c987d58e41bd8886153d3eae5986",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "attempt",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "inputThroughSeq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "requestId",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "sha256",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "step",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "data-agent/request"
           }
         ]
       },
@@ -59751,6 +60576,38 @@
       "sources": []
     },
     {
+      "digest": "77c993b445bf2654a9e7146d704c691e98920922f8c7467e8d0ee845ec45f562",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "runId",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "title",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [],
+      "sources": [
+        "packages/workflow/tool-workflow/src/types.ts:47"
+      ]
+    },
+    {
       "digest": "78a9be340090b735a39980e7222ce730c972fbcf1de7c9e0aef2125884b7caee",
       "schema": {
         "root": 0,
@@ -59839,6 +60696,20 @@
       "sources": [
         "packages/core/session/src/types.ts:212"
       ]
+    },
+    {
+      "digest": "79703355957df83af5f198b21208799e316aab2b1ffbab5a9654e6c59d0dd3b5",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "data-agent/request"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
     },
     {
       "digest": "79ddc907312f97cf9553d4841e8b3fc937097bd8d97900a790efad3c05255e99",
@@ -61167,7 +62038,7 @@
         "packages/workflow/tool-workflow/src/types.ts#ToolWorkflowRunEndData"
       ],
       "sources": [
-        "packages/workflow/tool-workflow/src/types.ts:36"
+        "packages/workflow/tool-workflow/src/types.ts:39"
       ]
     },
     {
@@ -65216,7 +66087,7 @@
         "packages/workflow/tool-workflow/src/types.ts#ToolWorkflowAgentStartData"
       ],
       "sources": [
-        "packages/workflow/tool-workflow/src/types.ts:20"
+        "packages/workflow/tool-workflow/src/types.ts:23"
       ]
     },
     {
@@ -69636,40 +70507,6 @@
       ]
     },
     {
-      "digest": "a6da9ad5d42ae83a6833a8288b076688e8e0801633ea36cbdd8a30a6d9f3160c",
-      "schema": {
-        "root": 0,
-        "nodes": [
-          {
-            "kind": "object",
-            "properties": [
-              {
-                "name": "name",
-                "type": 1,
-                "optional": false
-              },
-              {
-                "name": "runId",
-                "type": 1,
-                "optional": false
-              }
-            ],
-            "indices": []
-          },
-          {
-            "kind": "primitive",
-            "type": "string"
-          }
-        ]
-      },
-      "names": [
-        "packages/workflow/tool-workflow/src/types.ts#ToolWorkflowRunStartData"
-      ],
-      "sources": [
-        "packages/workflow/tool-workflow/src/types.ts:14"
-      ]
-    },
-    {
       "digest": "a720757f704a2512e9d2f20da4a093e582472176236a75ab8b8eb7aaff17d85a",
       "schema": {
         "root": 0,
@@ -73098,6 +73935,45 @@
       ]
     },
     {
+      "digest": "b8c1931918795e2564f6e57dd9e6d76bce2b0933da2dad34cf80c7bae2ac3c21",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "name",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "runId",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/workflow/tool-workflow/src/types.ts#ToolWorkflowRunStartData"
+      ],
+      "sources": [
+        "packages/workflow/tool-workflow/src/types.ts:15"
+      ]
+    },
+    {
       "digest": "b8fc636a2121df9d8423c242e03c9d23b7ab7c6fdce00e45746932c60b730f97",
       "schema": {
         "root": 0,
@@ -73820,7 +74696,7 @@
         "packages/workflow/tool-workflow/src/types.ts#ToolWorkflowAgentEndData"
       ],
       "sources": [
-        "packages/workflow/tool-workflow/src/types.ts:29"
+        "packages/workflow/tool-workflow/src/types.ts:32"
       ]
     },
     {
@@ -74050,79 +74926,6 @@
       "sources": [
         "packages/llm/llm/src/types.ts:105"
       ]
-    },
-    {
-      "digest": "c1f9e0405de6d18cabb9ee70782a027f9bbdc57e5abec9dcccdd56119e2e9058",
-      "schema": {
-        "root": 0,
-        "nodes": [
-          {
-            "kind": "object",
-            "properties": [
-              {
-                "name": "data",
-                "type": 1,
-                "optional": false
-              },
-              {
-                "name": "ignorable",
-                "type": 3,
-                "optional": true
-              },
-              {
-                "name": "seq",
-                "type": 4,
-                "optional": false
-              },
-              {
-                "name": "time",
-                "type": 4,
-                "optional": false
-              },
-              {
-                "name": "type",
-                "type": 5,
-                "optional": false
-              }
-            ],
-            "indices": []
-          },
-          {
-            "kind": "object",
-            "properties": [
-              {
-                "name": "name",
-                "type": 2,
-                "optional": false
-              },
-              {
-                "name": "runId",
-                "type": 2,
-                "optional": false
-              }
-            ],
-            "indices": []
-          },
-          {
-            "kind": "primitive",
-            "type": "string"
-          },
-          {
-            "kind": "literal",
-            "value": true
-          },
-          {
-            "kind": "primitive",
-            "type": "number"
-          },
-          {
-            "kind": "literal",
-            "value": "tool-workflow/run-start"
-          }
-        ]
-      },
-      "names": [],
-      "sources": []
     },
     {
       "digest": "c219efbdfd53b836786202ab4532913d555798f0a8615a4e9629736e3799fb70",
@@ -74701,6 +75504,20 @@
       ]
     },
     {
+      "digest": "ce0391c7ed060f10f5162bd217d9245dd02c08737684bc0591510ed38dc1d058",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "tool-workflow/log"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "cf6e3aaf1e2de6480aa0157730a41b9a492108a55304100b0f7e112711dd4331",
       "schema": {
         "root": 0,
@@ -74992,6 +75809,79 @@
           {
             "kind": "literal",
             "value": "delete"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "d1a76ca217758d3ffe98fa1a5edbe84d754b66228cd9436ef2fd8c4de38e1886",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "message",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "runId",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "tool-workflow/log"
           }
         ]
       },
@@ -77696,6 +78586,20 @@
           {
             "kind": "literal",
             "value": "one-shot"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "d3ceeabb961ef999c335289e85e78844d1d6f39bb9752eb19315ec8b59d0c9e5",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "tool-workflow/phase"
           }
         ]
       },
@@ -90420,6 +91324,38 @@
       "sources": []
     },
     {
+      "digest": "f708c8fe733e61b0df925cfc6bc650859a248ee57078313f589ca63af21ff62b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "message",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "runId",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [],
+      "sources": [
+        "packages/workflow/tool-workflow/src/types.ts:49"
+      ]
+    },
+    {
       "digest": "f7283223aacdc39b0adca728c8cbd4c090a20006a6fecec74421c30e943b489c",
       "schema": {
         "root": 0,
@@ -93842,6 +94778,84 @@
           {
             "kind": "literal",
             "value": "session/title-llm-request"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "fa979c353d6662370278ebad515bd45254413c2a7c60618d9f4f0413ac2ef42c",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 4,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 5,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "name",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "runId",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "tool-workflow/run-start"
           }
         ]
       },

@@ -943,6 +943,70 @@ export interface Config {
 ```
 <!-- END GENERATED config-catalog:@deepseek-ai/dsh-experimental-computer-use-cua-driver-mcp -->
 
+<!-- BEGIN GENERATED config-catalog:@deepseek-ai/dsh-experimental-data-agent -->
+<a id="deepseek-aidsh-experimental-data-agent"></a>
+
+## `@deepseek-ai/dsh-experimental-data-agent`
+
+- `inject`: `commands` · `sessionProjections` · `sessions` · `sessionQuery` · `llm`
+- `source`: [`packages/experimental/data-agent/src/config.ts:8`](../packages/experimental/data-agent/src/config.ts)
+
+```ts config-catalog
+/** Deployment settings shared by Web, SDK, and evaluation tools. */
+export interface Config {
+  /**
+   * Directory scanned for SQLite files; a relative path resolves against the
+   * process cwd. The scan seeds the source picker and `glmDb` projection.
+   */
+  directory: string
+  /** Maximum rows in a query preview; complete results use separate limits. */
+  maxRows: number
+  /**
+   * MySQL schema names exposed alongside the SQLite files, selectable in the
+   * picker and queryable through `sql`.
+   */
+  mysqlDatabases: string[]
+  /**
+   * Name of the environment variable holding the MySQL connection URL
+   * (`mysql://user:pass@host:port`), resolved from the launch environment or
+   * `.env`; the value never enters the configuration file.
+   */
+  mysqlUrlEnv: string
+  /**
+   * Directory of the built data-agent React app served on the web surface:
+   * the index replaces the workbench index through a webserver index tap, and
+   * assets ride the `/da-assets` prefix. A relative path resolves against the
+   * process cwd; an empty string disables UI serving.
+   */
+  uiDist: string
+  /** Session evidence directory, independent of the Web carrier. */
+  artifactsDirectory: string
+  /** Markdown documents and optional sources.json mapping database names to business references. */
+  documentsDirectory: string
+  /** Complete-result row limit; zero disables it. */
+  maxResultRows: number
+  /** Serialized-result, import and trace-export byte limit; zero disables it. */
+  maxResultBytes: number
+  /** Worker lifetime including connection and execution; zero disables it. */
+  queryTimeoutMs: number
+  /** Time allowed for a worker to acknowledge cancellation before forced termination. */
+  cancellationGraceMs: number
+  /** Maximum characters in one Markdown page. */
+  documentPageChars: number
+  /** Maximum rows in one rendered chart. */
+  maxChartPoints: number
+  /** Optional Chromium executable for PDF rendering; empty uses Playwright's installation. */
+  browserExecutablePath: string
+  /** Maximum UTF-8 bytes in all current uploads per category and complete active business knowledge. */
+  maxSchemaBytes: number
+  /** Maximum current uploaded documents per source and knowledge category. */
+  maxKnowledgeDocuments: number
+  /** Maximum wait for the cross-process knowledge writer lock. */
+  documentWriteTimeoutMs: number
+}
+```
+<!-- END GENERATED config-catalog:@deepseek-ai/dsh-experimental-data-agent -->
+
 <!-- BEGIN GENERATED config-catalog:@deepseek-ai/dsh-experimental-inspector -->
 <a id="deepseek-aidsh-experimental-inspector"></a>
 
@@ -3513,6 +3577,8 @@ export interface Config {
 ```ts config-catalog
 /** Plugin config; over-cap glob sampling is an explicit deployment choice and the remaining fields have defaults. */
 export interface Config {
+  /** Registered file-discovery tool name; must be nonblank and differ from grep. */
+  globToolName?: string
   /** Whether an over-cap `glob` page is sampled across top-level entries instead of taking the modification-time head. */
   sampleOverCapGlobResults: boolean
   /** Max paths one `glob` call retains inline; later paths go to the formatted spill file. */

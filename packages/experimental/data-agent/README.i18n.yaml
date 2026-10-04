@@ -1,0 +1,58 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/data-agent/README.md
+/:
+  en: 75991f655c40613c
+  zh: 9cbc7895b79585bd
+/deepseek-ai-dsh-experimental-data-agent:
+  en: e86f1fe89cd595d1
+  zh: 4d8f0e101774c125
+/deepseek-ai-dsh-experimental-data-agent/summary:
+  en: 07f1351dd5dc14c4
+  zh: 968123485e940f48
+/deepseek-ai-dsh-experimental-data-agent/table-of-contents:
+  en: 122f0d41696980b1
+  zh: f366d2759fbb78b1
+/deepseek-ai-dsh-experimental-data-agent/use-this-package:
+  en: c06e8a8ec33a729f
+  zh: 95c505ff697dc614
+/deepseek-ai-dsh-experimental-data-agent/understand-the-implementation:
+  en: c81900092dda111b
+  zh: 87d6c1dc1dee49c5
+/deepseek-ai-dsh-experimental-data-agent/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/deepseek-ai-dsh-experimental-data-agent/model-experience/system-prompt:
+  en: cf78b9dd5596495f
+  zh: bd44560f8c2435e8
+/deepseek-ai-dsh-experimental-data-agent/model-experience/system-prompt/what-the-model-sees:
+  en: c1a4fecc0b078574
+  zh: 8e467bce7ef56191
+/deepseek-ai-dsh-experimental-data-agent/model-experience/system-prompt/what-the-model-sees/static-analysis-guide:
+  en: 11c6bd88ce1ae55a
+  zh: cc5857c857c25b35
+/deepseek-ai-dsh-experimental-data-agent/model-experience/system-prompt/token-effect:
+  en: b5393c002bf67fd9
+  zh: 6f329ff4912ef799
+/deepseek-ai-dsh-experimental-data-agent/model-experience/system-prompt/kv-cache-effect:
+  en: c295a7b2f5d8e4f7
+  zh: 3df4b320e9db154b
+/deepseek-ai-dsh-experimental-data-agent/model-experience/tool-schemas-and-history:
+  en: 21e599abe4b59541
+  zh: d0cdf1552df9e6e1
+/deepseek-ai-dsh-experimental-data-agent/model-experience/tool-schemas-and-history/what-the-model-sees:
+  en: bb642cbef62ea3f8
+  zh: 5907530f0dca51f8
+/deepseek-ai-dsh-experimental-data-agent/model-experience/tool-schemas-and-history/token-effect:
+  en: 0a88b9b880272006
+  zh: 47161b5ae17254f1
+/deepseek-ai-dsh-experimental-data-agent/model-experience/tool-schemas-and-history/kv-cache-effect:
+  en: eab8f5a52c094ad2
+  zh: e2493be8fca1bb95
+/deepseek-ai-dsh-experimental-data-agent/known-limitations-and-deferred-work:
+  en: 9c19ababdf8c3753
+  zh: 75e904c6e6739531
+/deepseek-ai-dsh-experimental-data-agent/known-limitations-and-deferred-work/dev-note:
+  en: 0a1253c6f7b5e8b9
+  zh: 9f56528562c7c914

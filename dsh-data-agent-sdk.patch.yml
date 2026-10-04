@@ -1,0 +1,38 @@
+# SDK carrier for the same Agent plane used by the Data Agent Web UI.
+- id: persistent-bash
+  disabled: true
+- id: persistent-pwsh
+  disabled: true
+- id: tools
+  config:
+    mode: native
+- insert:
+    - id: commands
+      name: '@deepseek-ai/dsh-commands'
+    - id: session-query
+      name: '@deepseek-ai/dsh-session-query-sqlite'
+      config:
+        path: ':memory:'
+        openAt: never
+    - id: data-agent-token-meter
+      name: '@deepseek-ai/dsh-token-meter'
+    - id: data-agent
+      name: '@deepseek-ai/dsh-experimental-data-agent'
+      config:
+        uiDist: ''
+    - id: data-agent-fs
+      name: '@deepseek-ai/dsh-fs-local'
+    - id: data-agent-ptc
+      name: '@deepseek-ai/dsh-ptc-runtime-node'
+    - id: data-agent-user-questions
+      name: '@deepseek-ai/dsh-user-questions'
+    - id: data-agent-subagents
+      name: '@deepseek-ai/dsh-subagent'
+    - id: data-agent-subagent-spawn
+      name: '@deepseek-ai/dsh-subagent-spawn-in-process'
+    - id: agent-preset-registry
+      name: '@deepseek-ai/dsh-agent-preset-registry'
+      config:
+        default: data-agent
+    - id: data-agent-preset
+      name: '@deepseek-ai/dsh-experimental-data-agent/preset'

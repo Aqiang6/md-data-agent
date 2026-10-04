@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import InvariantRegistry, { InvariantError } from '@deepseek-ai/dsh-invariants'
 import SessionStore, { SessionId, type Session } from '@deepseek-ai/dsh-session'
 import { WorkflowRunId, type WorkflowRunId as WorkflowRunIdType } from '@deepseek-ai/dsh-workflow/types'
@@ -24,7 +25,9 @@ describe('durable workflow-record invariants', () => {
     const second = WorkflowRunId('second')
     const third = WorkflowRunId('third')
     session.append('tool-workflow/run-start', { runId: first, name: 'first' })
-    session.append('tool-workflow/run-start', { runId: second, name: 'second' })
+    session.append('tool-workflow/run-start', { runId: second, name: 'second', callId: ToolCallId('workflow-call') })
+    session.append('tool-workflow/phase', { runId: second, title: 'Analysis' }, { ignorable: true })
+    session.append('tool-workflow/log', { runId: second, message: 'Reading' }, { ignorable: true })
     session.append('tool-workflow/agent-start', {
       runId: second, seq: 1, label: '', phase: '', childId: SessionId('child'),
     })
@@ -67,6 +70,25 @@ describe('durable workflow-record invariants', () => {
     append(type, data)
   }
   const invalidCases: readonly [string, Mutation, RegExp][] = [
+    ['empty calling tool id', (session) => {
+      appendRaw(session, 'tool-workflow/run-start', { runId: 'bad-call', name: 'Analysis', callId: '' })
+    }, /callId must be a non-empty string/],
+    ['numeric calling tool id', (session) => {
+      appendRaw(session, 'tool-workflow/run-start', { runId: 'bad-call', name: 'Analysis', callId: 1 })
+    }, /callId must be a non-empty string/],
+    ['progress without a run', (session) => {
+      session.append('tool-workflow/phase', { runId: WorkflowRunId('missing'), title: 'Analysis' }, { ignorable: true })
+    }, /no matching/],
+    ['progress after run end', (session, runId) => {
+      session.append('tool-workflow/run-end', { runId, stopReason: 'completed' })
+      session.append('tool-workflow/log', { runId, message: 'Late' }, { ignorable: true })
+    }, /appears after/],
+    ['invalid phase title', (session, runId) => {
+      appendRaw(session, 'tool-workflow/phase', { runId, title: 1 })
+    }, /title must be a string/],
+    ['invalid progress message', (session, runId) => {
+      appendRaw(session, 'tool-workflow/log', { runId, message: null })
+    }, /message must be a string/],
     ['null event data', (session) => {
       appendRaw(session, 'tool-workflow/run-start', null)
     }, /data must be a JSON object/],

@@ -1,0 +1,8 @@
+version: 1
+scenario: fs-read-windows-1252
+profile: headless
+composition: fs-read-windows-1252
+recording: authored
+header:
+  class: fs-read-windows-1252
+  pin: true

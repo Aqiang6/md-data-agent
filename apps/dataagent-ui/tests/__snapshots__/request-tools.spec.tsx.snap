@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`explains each recorded tool in en-US without replacing its original definitions 1`] = `
+[
+  "readRead a text file by path, with optional line windows",
+  "grepSearch file contents",
+  "findFind files by name pattern",
+  "lsList immediate directory entries",
+  "sqlRun read-only SQL and return the complete file, row count and preview",
+  "reportGenerate Markdown, HTML or PDF from complete Markdown content; revisions save new files",
+  "benchmarkSubmit the final SQL and optional answer for BIRD/Spider evaluation",
+  "askClarify ambiguity, missing conditions or business definitions and wait for a choice or free-text answer",
+  "list_sourcesDiscover enabled sources and versioned Schema, business knowledge and index Markdown references",
+  "search_documentsSearch Schema, business definitions, skills, templates and result summaries for readable Markdown references",
+  "read_documentRead Markdown by document ID and version, page by page, retaining the content and version actually read",
+  "import_datasetImport CSV, Excel or Parquet from the session workspace, generate worksheet and Schema Markdown, and retain original files",
+  "query_databaseRun read-only SQL within the enabled source/table scope; save complete bounded results and return their IDs and previews",
+  "analyze_dataGroup, aggregate, sort, drop nulls, deduplicate, join or compare periods over complete saved results without arbitrary code execution",
+  "render_chartGenerate a downloadable SVG bar chart from a saved result and selected fields",
+  "generate_reportGenerate Markdown, HTML or PDF reports from Markdown content bound to data results and charts",
+  "submit_analysisRecord the final answer, SQL, result references and delivered files for product and evaluation consumers; does not replace verification",
+  "ask_user_questionClarify ambiguity, missing conditions or business definitions and wait for a choice or free-text answer",
+  "list_databasesLegacy source discovery alias with the same role as list_sources",
+  "presentDeclare existing files as user deliverables; does not create files",
+  "subagentDelegate a focused task to a child Agent and obtain its result",
+  "workflowOrganize phases and child Agents through JavaScript workflows, with concurrent tasks and structured results",
+]
+`;
+
+exports[`explains each recorded tool in zh-CN without replacing its original definitions 1`] = `
+[
+  "read按路径读取文本文件，可按行分页阅读资料或 SQL 结果",
+  "grep检索文件内容",
+  "find按文件名模式查找文件",
+  "ls列出目录的直接子项",
+  "sql执行只读 SQL，返回完整结果路径、行数与预览",
+  "report提交完整 Markdown 内容，生成 Markdown、HTML 或 PDF 报告；修改时保存新版本",
+  "benchmark提交最终 SQL 和可选答案，供 BIRD／Spider 评测读取",
+  "ask向用户澄清歧义、缺失条件或待确认口径，等待选择或补充回答",
+  "list_sources发现当前分析生效的数据源，以及 Schema、业务资料和索引 MD 的版本引用",
+  "search_documents检索 Schema、业务口径、技能、模板和结果摘要，返回可阅读的 MD 引用",
+  "read_document按文档 ID 和版本分页阅读 MD，保留实际读取的内容与版本",
+  "import_dataset导入会话工作区内的 CSV、Excel 或 Parquet，生成工作表与 Schema MD，保留原文件",
+  "query_database在生效库表范围执行只读 SQL，保存完整受限结果，返回结果标识和预览",
+  "analyze_data对已保存的完整结果进行分组聚合、排序、去空值、去重、关联或期间对比，不执行任意代码",
+  "render_chart使用已保存的结果和指定字段生成可下载的 SVG 柱状图",
+  "generate_report以 Markdown 为内容源，绑定数据结果与图表，生成 Markdown、HTML 或 PDF 报告",
+  "submit_analysis记录最终答案、SQL、结果引用和交付文件，供产品与评测读取；不代替计算核验",
+  "ask_user_question向用户澄清歧义、缺失条件或待确认口径，等待选择或补充回答",
+  "list_databases兼容旧调用的数据源发现入口，作用与 list_sources 相同",
+  "present将已经存在的文件声明为用户可获取的交付物，本身不生成文件",
+  "subagent将独立子任务交给子 Agent 执行并获取结果",
+  "workflow通过 JavaScript 工作流组织阶段与子 Agent，支持并发任务和结构化结果",
+]
+`;

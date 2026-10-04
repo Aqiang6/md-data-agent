@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write apps/dataagent-ui/README.md
+/data-agent-ui:
+  en: fae29b5e1ae07fde
+  zh: e0c7b06655b1c7d7
+/data-agent-ui/runtime:
+  en: e52b5788082bbac2
+  zh: edd5c1542912303d
+/data-agent-ui/analysis-history:
+  en: 55537f64d7097c8d
+  zh: bd9c1ea1f55016b5
+/data-agent-ui/models-and-api:
+  en: b968e0b24fd09d5b
+  zh: 6854e92ddeba1212
+/data-agent-ui/execution-and-results:
+  en: a2f9540b69c57df2
+  zh: 9aa9b63787d26614

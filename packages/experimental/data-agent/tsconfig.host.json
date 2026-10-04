@@ -1,0 +1,95 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib/types",
+    "tsBuildInfoFile": "lib/tsconfig.host.tsbuildinfo"
+  },
+  "files": [
+    "src/brand.ts",
+    "src/source-catalog.ts",
+    "src/source-schema.ts",
+    "src/source-markdown.ts",
+    "src/data-scope.ts",
+    "src/config.ts",
+    "src/data-core.ts",
+    "src/reports.ts",
+    "src/trace.ts",
+    "src/web-api.ts",
+    "src/questions-api.ts",
+    "src/preset.ts",
+    "src/policy.ts",
+    "src/databases.ts",
+    "src/index.ts",
+    "src/ui-server.ts",
+    "src/types.ts",
+    "src/primitives.ts",
+    "src/analysis-tools.ts",
+    "src/analysis.ts"
+  ],
+  "references": [
+    {
+      "path": "../../core/scope"
+    },
+    {
+      "path": "../../credentials/credentials"
+    },
+    {
+      "path": "../../preset/agent-preset-registry"
+    },
+    {
+      "path": "../../util/brand"
+    },
+    {
+      "path": "../../interaction/user-questions"
+    },
+    {
+      "path": "../../client/connection/tsconfig.host.json"
+    },
+    {
+      "path": "../../llm/llm"
+    },
+    {
+      "path": "../../session-query/session-query"
+    },
+    {
+      "path": "../../interaction/commands"
+    },
+    {
+      "path": "../../core/session"
+    },
+    {
+      "path": "../../core/system-prompt"
+    },
+    {
+      "path": "../../core/tools"
+    },
+    {
+      "path": "../../host/webserver"
+    },
+    {
+      "path": "../../session/session-projection"
+    },
+    {
+      "path": "../../../vendor/cordis"
+    },
+    {
+      "path": "../../../vendor/schemastery"
+    },
+    {
+      "path": "../../fs/fs"
+    },
+    {
+      "path": "../../fs/tool-fs"
+    },
+    {
+      "path": "../../fs/tool-fs-search"
+    },
+    {
+      "path": "../../util/values"
+    },
+    {
+      "path": "../../interaction/tool-ask-user"
+    }
+  ]
+}

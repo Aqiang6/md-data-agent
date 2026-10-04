@@ -120,7 +120,7 @@ Headless/ACP 与 SDK 适配器在规范化之前，将原始目录中的子创�
 | [`src/manifest.ts`](src/manifest.ts) | 封闭 `snapshot.yml` schema、收集与归属规则 |
 | [`src/session-files.ts`](src/session-files.ts) | 规范 parent/child generation grammar、header 一致性与最高角色选择 |
 | [`src/identity.ts`](src/identity.ts) | 跨父子日志的类型化首次出现身份 token 化 |
-| [`src/normalize.ts`](src/normalize.ts) | 纯规范化器与擦除辅助 |
+| [`src/normalize.ts`](src/normalize.ts) | 纯规范化与擦除；易变的 Data Agent 请求摘要变为 `{{requestSha256}}`，其他摘要保持原值 |
 | [`src/workspace.ts`](src/workspace.ts) | 场景 workspace 设置与完整预期状态比较 |
 | [`src/suite.ts`](src/suite.ts) | 场景表套件工厂、fixture 保护、录制/刷新回写 |
 | [`src/index.ts`](src/index.ts) | 再导出四个层的包入口 |

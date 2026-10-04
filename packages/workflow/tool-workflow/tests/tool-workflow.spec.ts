@@ -1,5 +1,6 @@
 import { describe, expect, it, onTestFinished, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
+import { bindScopeParent, createScope } from '@deepseek-ai/dsh-scope'
 import Loader from '@deepseek-ai/cordis-plugin-loader'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@deepseek-ai/dsh-tools'
@@ -97,15 +98,19 @@ class StubEngine extends WorkflowEngine {
   }
 }
 
-async function setup(config?: { toolName?: string; maxResultChars?: number }) {
-  const ctx = new Context()
+async function setup(config?: { toolName?: string; maxResultChars?: number }, scoped = false) {
+  const root = new Context()
+  const key = {}
+  const ctx = scoped ? createScope(root, key).ctx : root
+  if (scoped) onTestFinished(async () => { await root.fiber.dispose() })
   await ctx.plugin(SystemPrompt)
   await ctx.plugin(ToolRuntime)
   await ctx.plugin(StubEngine)
   await ctx.plugin(toolWorkflow, config ?? {})
-  const engine = ctx.workflowEngine as StubEngine
+  const engine = ctx.get('workflowEngine') as StubEngine
   const session = Session.create(SessionId('caller'))
   const parent = { id: session.id, options: {}, session } as unknown as Agent
+  if (scoped) bindScopeParent(parent, key)
   return { ctx, engine, parent, session }
 }
 
@@ -117,7 +122,8 @@ function execute(ctx: Context, args: unknown, extra?: {
   signal?: AbortSignal
   parent?: ToolExecutionToken
 }): Promise<ToolExecutionResult> {
-  return ctx.tools.execute({
+  const tools = ctx.get('tools') as ToolRuntime
+  return tools.execute({
     signal: testToolSignal,
     callId: ToolCallId('call-1'),
     name: 'workflow',
@@ -129,6 +135,27 @@ function execute(ctx: Context, args: unknown, extra?: {
 }
 
 describe('dsh-tool-workflow', () => {
+  it('records tracked progress inside a preset scope and ignores foreign run identities', async () => {
+    const { ctx, engine, parent, session } = await setup(undefined, true)
+    const append = vi.spyOn(session, 'append')
+    const pending = execute(ctx, { script: SCRIPT, meta: META }, { agent: parent })
+    await vi.waitFor(() => { expect(engine.requests).toHaveLength(1) })
+    const runId = WorkflowRunId('run-1')
+    ctx.emit('workflow/phase', { id: WorkflowRunId('foreign'), meta: META }, 'Foreign')
+    engine.phase(runId, 'Inspect')
+    engine.logLine(runId, 'Reading')
+    const child = { seq: 1, label: 'Schema', childId: SessionId('child-scope') }
+    engine.agentStart(runId, child)
+    engine.agentEnd(runId, { ...child, outcome: 'completed' })
+    engine.settleRun(runId, { value: 'done', stopReason: 'completed', agentsStarted: 1 })
+    expect((await pending).isError).toBe(false)
+    expect(append.mock.calls.map(call => call[0])).toEqual([
+      'tool-workflow/run-start', 'tool-workflow/phase', 'tool-workflow/log',
+      'tool-workflow/agent-start', 'tool-workflow/agent-end', 'tool-workflow/run-end',
+    ])
+    expect(append.mock.calls[0]?.[1]).toMatchObject({ callId: 'call-1' })
+  })
+
   it('starts a run with the script/args/parent/signal and renders the completed value', async () => {
     const { ctx, engine, parent } = await setup()
     const controller = new AbortController()
@@ -169,7 +196,7 @@ describe('dsh-tool-workflow', () => {
     expect((await pending).isError).toBe(false)
     expect(engine.disposed).toBe(1)
     expect(session.snapshotEvents().map(event => [event.type, event.data])).toEqual([
-      ['tool-workflow/run-start', { runId: 'run-1', name: 'audit' }],
+      ['tool-workflow/run-start', { runId: 'run-1', name: 'audit', callId: 'call-1' }],
       ['tool-workflow/agent-start', {
         runId: 'run-1', seq: 1, label: '', phase: '', childId: 'child-1',
       }],
@@ -514,8 +541,11 @@ describe('dsh-tool-workflow', () => {
       expect(engine.disposed).toBe(1)
       // The durable session record still brackets the background run.
       expect(session.snapshotEvents().map(event => event.type)).toEqual([
-        'tool-workflow/run-start', 'tool-workflow/agent-start', 'tool-workflow/agent-end', 'tool-workflow/run-end',
+        'tool-workflow/run-start', 'tool-workflow/phase', 'tool-workflow/log',
+        'tool-workflow/agent-start', 'tool-workflow/agent-end', 'tool-workflow/run-end',
       ])
+      expect(session.snapshotEvents().filter(event => event.type === 'tool-workflow/phase' || event.type === 'tool-workflow/log')
+        .every(event => event.ignorable === true)).toBe(true)
       // A straggling event after settlement finds no tracked run and is dropped.
       engine.phase(runId, 'Late')
       expect(retained(ctx, job.id, parent)).not.toContain('Late')

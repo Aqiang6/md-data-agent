@@ -9,8 +9,20 @@
   en: 6cc2cd9ced70bb09
   zh: 1c0e6cb4ba2ed637
 /tool-schema-catalog/tool-package-map:
-  en: 72e2a375567f5850
-  zh: b51b8ea5b52814fd
+  en: 07f6c155c0f2b445
+  zh: 9e8181c3b93a3811
+/tool-schema-catalog/deepseek-ai-dsh-experimental-data-agent:
+  en: 429aa2fedcb2f83c
+  zh: 429aa2fedcb2f83c
+/tool-schema-catalog/deepseek-ai-dsh-experimental-data-agent/benchmark:
+  en: 4f332e3b2a32d0e6
+  zh: a83fbab8515e3763
+/tool-schema-catalog/deepseek-ai-dsh-experimental-data-agent/report:
+  en: 6865b9bf6076de73
+  zh: 3c5b86772205e0d4
+/tool-schema-catalog/deepseek-ai-dsh-experimental-data-agent/sql:
+  en: 23cfa9eeb09db481
+  zh: b4d9111f8deb6a7d
 /tool-schema-catalog/deepseek-ai-dsh-plugin-manager:
   en: e0143916bb634762
   zh: e0143916bb634762
@@ -120,8 +132,8 @@
   en: 5b6a252adde51af6
   zh: 7aa172a5d8b9cbd2
 /tool-schema-catalog/deepseek-ai-dsh-tool-fs/read:
-  en: 94bfc5b03c63baef
-  zh: 339338a0e74696c3
+  en: 0f1aa577fd658584
+  zh: d3f5531158600807
 /tool-schema-catalog/deepseek-ai-dsh-tool-fs/read-image:
   en: f6f7a1140066ce04
   zh: d528e01a0939795a

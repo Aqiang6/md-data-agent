@@ -125,6 +125,13 @@ interface SdkAssertions {
 }
 
 const SDK_ASSERTIONS: Readonly<Record<string, SdkAssertions>> = {
+  'data-agent-tools': {
+    expectedFinalResponse: 'DATA_AGENT_OK',
+    expectedTools: {
+      ask: ['questions'], benchmark: ['sql'], find: ['pattern'], grep: ['pattern'], ls: [],
+      read: ['file_path'], report: ['markdown', 'title', 'formats'], sql: ['sql'],
+    },
+  },
   'dynamic-tool-updates': {
     expectedFinalResponse: 'DONE',
   },
@@ -324,6 +331,7 @@ function contextOf(logs: readonly { content: string; header: Record<string, unkn
   return {
     sessionIds: logs.flatMap(log => typeof log.header.id === 'string' ? [log.header.id] : []),
     cwd,
+    cwdAliases: [cwd.replaceAll('\\', '/'), JSON.stringify(cwd).slice(1, -1)],
   }
 }
 
@@ -349,7 +357,7 @@ async function hydrateReplayFixtures(scenario: CorpusScenario, cwd: string): Pro
   await mkdir(root, { recursive: true })
   return Promise.all((await fixtureFiles(scenario)).map(async (source) => {
     const destination = join(root, basename(source))
-    await writeFile(destination, (await readFile(source, 'utf8')).replaceAll('{{cwd}}', cwd))
+    await writeFile(destination, (await readFile(source, 'utf8')).replaceAll('{{cwd}}', JSON.stringify(cwd).slice(1, -1)))
     return destination
   }))
 }
@@ -903,6 +911,10 @@ describe('TypeScript SDK snapshots over the jsonrpc runtime', () => {
         }
       }
       if (assertions.expectedFinalResponse !== undefined) {
+        if (scenario.name === 'data-agent-tools') {
+          expect(results.flatMap(result => result.events).filter(event => event.type === 'turn/end'))
+            .toMatchObject([{ data: { reason: { kind: 'completed' } } }])
+        }
         expect(results.at(-1)?.finalResponse, `${scenario.name}: final response`).toBe(assertions.expectedFinalResponse)
         const parent = ordered[0]
         if (parent === undefined) throw new Error(`${scenario.name}: no primary session log`)
@@ -941,6 +953,8 @@ describe('TypeScript SDK snapshots over the jsonrpc runtime', () => {
       }
 
       if (writesSessionFixtures || refreshing && retained) {
+        if (scenario.name === 'data-agent-tools')
+          expectedContents = expectedContents.map(content => normalizeSessionLog(content, actualContext, { identityMode: 'preserve' }))
         const outputFiles = ordered.map((log, index) => join(scenarioDir, retained
           ? writerSnapshotName(index)
           : sessionFixtureName(index, sessionHeaderVersion(log.content, `harvested Session ${index}`))))

@@ -1,0 +1,57 @@
+# SDK carrier for the same Agent plane used by the Data Agent Web UI.
+- id: persistent-bash
+  disabled: true
+- id: persistent-pwsh
+  disabled: true
+- id: tools
+  config:
+    mode: native
+- insert:
+    - id: commands
+      name: '@deepseek-ai/dsh-commands'
+    - id: data-agent
+      name: '@deepseek-ai/dsh-experimental-data-agent'
+      config:
+        uiDist: ''
+    - id: agent-preset-registry
+      name: '@deepseek-ai/dsh-agent-preset-registry'
+      config:
+        default: data-agent
+    - id: data-agent-preset
+      name: '@deepseek-ai/dsh-experimental-data-agent/preset'
+
+- id: data-agent
+  config:
+    directory: databases
+    documentsDirectory: documents
+    artifactsDirectory: .dsh/data-agent
+- id: data-agent-preset
+  config:
+    benchmark: true
+- id: session-persistence-jsonl
+  config:
+    root: !!js dshHomePath('sessions')
+    compression: none
+- id: skill-filesystem
+  config:
+    includeDefaultRoots: false
+
+# Keyless TypeScript SDK replay patch over the live profile patch.
+
+- id: llm-deepseek
+  name: '@deepseek-ai/dsh-llm-deepseek-api-key'
+  disabled: true
+
+- insert:
+    - id: data-agent-replay
+      name: './replay.mjs'
+      disabled: false
+      config:
+        providers:
+          - id: data-fixture
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+
+- id: sdk-jsonrpc-server
+  inject: [sdkAppStartup, loader, dataReplayReady]

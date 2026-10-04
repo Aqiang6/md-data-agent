@@ -17,7 +17,7 @@ import z from '@deepseek-ai/schemastery'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { ToolCallView, ToolResultView } from '@deepseek-ai/dsh-tools'
 import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
+import type { ContentBlock, ToolCallId } from '@deepseek-ai/dsh-llm'
 import type { JobId, JobOutcome } from '@deepseek-ai/dsh-jobs'
 import type { Session, SessionEventMap } from '@deepseek-ai/dsh-session'
 import type { JsonValue } from '@deepseek-ai/dsh-util-values'
@@ -65,7 +65,7 @@ export const Config: z<Config> = z.object({
 type ResolvedConfig = Required<Config>
 
 interface WorkflowRecorder {
-  start(session: Session, run: WorkflowRun): void
+  start(session: Session, run: WorkflowRun, callId: ToolCallId): void
   finish(runId: WorkflowRunId, stopReason: WorkflowStopReason): void
   abandon(runId: WorkflowRunId): void
 }
@@ -123,7 +123,7 @@ function createWorkflowRecorder(ctx: Context): WorkflowRecorder {
       childId: agent.childId,
     }
     if (!append(session, 'tool-workflow/agent-start', data)) active.delete(info.id)
-  })
+  }, { global: true })
   ctx.on('workflow/agent-end', (info, agent) => {
     const session = active.get(info.id)
     if (session === undefined) return
@@ -133,11 +133,23 @@ function createWorkflowRecorder(ctx: Context): WorkflowRecorder {
       outcome: agent.outcome,
     }
     if (!append(session, 'tool-workflow/agent-end', data)) active.delete(info.id)
-  })
+  }, { global: true })
+  ctx.on('workflow/phase', (info, title) => {
+    const session = active.get(info.id)
+    if (!session) return
+    try { session.append('tool-workflow/phase', { runId: info.id, title }, { ignorable: true }) }
+    catch (error) { ctx.logger.warn('workflow phase recording failed: %s', renderRecordingError(error)); active.delete(info.id) }
+  }, { global: true })
+  ctx.on('workflow/log', (info, message) => {
+    const session = active.get(info.id)
+    if (!session) return
+    try { session.append('tool-workflow/log', { runId: info.id, message }, { ignorable: true }) }
+    catch (error) { ctx.logger.warn('workflow progress recording failed: %s', renderRecordingError(error)); active.delete(info.id) }
+  }, { global: true })
 
   return {
-    start(session, run) {
-      if (append(session, 'tool-workflow/run-start', { runId: run.id, name: run.meta.name })) {
+    start(session, run, callId) {
+      if (append(session, 'tool-workflow/run-start', { runId: run.id, name: run.meta.name, callId })) {
         active.set(run.id, session)
       }
     },
@@ -256,6 +268,7 @@ function renderResult(name: string, agentsStarted: number, value: JsonValue, max
  * @param args - the validated tool call.
  * @param parent - the calling agent; owns the job.
  * @param recordsRun - whether this top-level call records durable run events.
+ * @param callId - calling root tool identity recorded with the run.
  * @param deps - the tool's recorder/mirror taps and the render cap.
  * @returns the background result for the tool's output schema.
  */
@@ -264,6 +277,7 @@ function startBackgroundRun(
   args: WorkflowCallArgs,
   parent: Agent,
   recordsRun: boolean,
+  callId: ToolCallId,
   deps: { recorder: WorkflowRecorder; mirror: WorkflowRecordMirror; maxResultChars: number },
 ): { kind: 'background'; jobId: JobId; runId: WorkflowRunId } {
   const jobs = ctx.get('jobs')
@@ -286,7 +300,7 @@ function startBackgroundRun(
         parent,
       })
       deps.mirror.start(run.id, job)
-      if (recordsRun) deps.recorder.start(parent.session, run)
+      if (recordsRun) deps.recorder.start(parent.session, run, callId)
       const done = run.result.then(async (result): Promise<JobOutcome> => {
         try {
           // Keep member listeners alive through disposal: an engine may
@@ -420,7 +434,7 @@ export function apply(ctx: Context, config: Config): void {
         // jobs.start synchronously from there. The shell tools await a
         // sandbox escalation approval before registering, which is the window
         // their check covers.
-        return startBackgroundRun(ctx, args, parent, exec.parent === undefined, {
+        return startBackgroundRun(ctx, args, parent, exec.parent === undefined, exec.callId, {
           recorder,
           mirror,
           maxResultChars,
@@ -439,7 +453,7 @@ export function apply(ctx: Context, config: Config): void {
       })
       const recordsRun = exec.parent === undefined
       // The engine publishes member events after start() returns and this run record is active.
-      if (recordsRun) recorder.start(parent.session, run)
+      if (recordsRun) recorder.start(parent.session, run, exec.callId)
 
       // Bridge the tool's abort signal to the run: if the parent step is aborted while the
       // script is in flight, cancel the whole run. The signal also enters the engine directly, but

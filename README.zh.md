@@ -1,98 +1,39 @@
-# DeepSeek Harness
+# MD Data Agent
 
 [English](README.md) | 中文
 
-DeepSeek Harness（`dsh`）是由 [DeepSeek AI](https://deepseek.com) 开发的开源 agent harness（智能体框架）。
-
-它构建于**一切皆插件**的架构之上，由 [Cordis](https://github.com/cordiverse/cordis) 驱动，其设计参见论文 [_A Programming Paradigm for Spatiotemporal Composability_](https://arxiv.org/abs/2608.25512)。
-
-文档：[https://deepseek-harness.github.io/deepseek-harness/](https://deepseek-harness.github.io/deepseek-harness/)
-
-## 开发者预览
-
-DeepSeek Harness 处于 _开发者预览_ 阶段，正在快速迭代。**未来将出现破坏兼容性的变更。**
-
-运行本项目前，请阅读[安全说明](SAFETY.zh.md)。
+基于 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 和 Cordis 的数据库分析助手。通过统一的文件工具阅读 Schema 和业务 Markdown，澄清模糊指标，执行 SQL，并保留可查看的提示词、工具调用和结果轨迹。
 
 <a id="run"></a>
 
-## 运行
-
-### 通过 `npm` 运行
-
-安装 `Node.js`，然后运行：
-
-```sh
-npx @deepseek-ai/dsh web
-```
-
-该命令默认会在 `http://127.0.0.1:3080` 启动 Web UI，本机启动时还会用默认浏览器打开页面。通过 SSH 启动时只打印宿主机 URL，因为本地转发地址由 SSH 客户端或编辑器持有。传入 `--no-open` 可仅运行服务器而不打开浏览器。详见 [Web UI 指南](docs/user/guide/index.zh.md)。
-
 <a id="run-from-source"></a>
 
-### 从源码运行
+## 运行
 
-如需从仓库源码运行：
+安装 Node.js `^22.19.0 || >=24.0.0` 和 pnpm `11.7.0`。Windows 下运行 `start.bat`，安装依赖、构建缺少的产物并启动专用 Data Agent profile。也可显式执行源码启动流程：
 
 ```sh
-git clone https://github.com/deepseek-ai/deepseek-harness.git
-cd deepseek-harness
 pnpm install
 pnpm run build
-pnpm dsh web
+pnpm --filter dataagent-ui run build
+pnpm exec tsx scripts/prepare-data-agent-profile.ts
+pnpm dsh --profile data-agent
 ```
 
-`pnpm run build` 会准备仓库产物。`pnpm dsh web` 会直接使用这些已构建产物，不会重新构建。
+初始 profile 提供官方 DeepSeek 模型，默认选择 DeepSeek Flash。在“模型与 API”中配置自己的密钥，或将 `.env.example` 复制为 `.env` 后填写 `DEEPSEEK_API_KEY`。后续准备 profile 时保留已选择的模型。
 
-## 社区与支持
+通过数据源管理连接自己的数据库，并提供对应的 Schema 和业务 Markdown。仓库不包含个人连接、数据库、业务资料或 API Key。工作台用法见 [Data Agent UI](apps/dataagent-ui/README.zh.md)，数据源权限和文档绑定见 [Data Agent 配置](packages/experimental/data-agent/README.zh.md)。
 
-- 通过 [GitHub Discussions](https://github.com/deepseek-ai/deepseek-harness/discussions) 提交反馈或 bug 报告。
-- 为你的插件仓库添加 [`dsh-plugin`](https://github.com/topics/dsh-plugin) 话题，便于被发现。
-- 欢迎加入 DeepSeek Harness 企微群：扫码添加企微小助手并填写入群问卷，完成后小助手会邀请你入群。
+## 仓库内容
 
-<table>
-  <thead>
-    <tr>
-      <th align="center">企微小助手</th>
-      <th align="center">入群问卷</th>
-      <th align="center">微信公众号</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center"><img src="https://cdn.deepseek.com/harness/readme/community-wecom-assistant.png" alt="DeepSeek Harness 企微小助手二维码" width="180" height="180"></td>
-      <td align="center"><a href="https://trtgsjkv6r.feishu.cn/share/base/form/shrcnIt5twSVdLGD52KJBckGCgg"><img src="https://cdn.deepseek.com/harness/readme/community-wecom-survey.png" alt="DeepSeek Harness 入群问卷二维码" width="180" height="180"></a></td>
-      <td align="center"><img src="https://cdn.deepseek.com/harness/readme/community-wechat-official-account.png" alt="DeepSeek Harness 团队微信公众号二维码" width="180" height="180"></td>
-    </tr>
-  </tbody>
-</table>
+可运行的 Harness 工作区、Cordis 源码、构建脚本和回归测试资料共同保留。本地凭据、数据库、业务文档、构建产物、浏览器录制和基准测试运行记录均被忽略。官方 BIRD 和 Spider 基准测试资源及运行结果在此工程之外单独维护。
 
-## 参与贡献
-
-参见 [CONTRIBUTING.md](CONTRIBUTING.zh.md)。
+提交前运行 `pnpm run check:git-files`。提交钩子会拒绝被强行加入 Git 暂存区的忽略文件；这项检查不扫描早期 Git 历史，也不判断任意源码文本中是否存在密钥。
 
 ## 开发
 
-请先阅读[开发指南](docs/development.zh.md)与[架构文档](docs/architecture.zh.md)。
-
-`pnpm run dev:web` 会在一个终端里完成构建、启动，并在源码修改时重建 client bundle；`make help` 列出 Web 与 Desktop 对应的 Make target。完整表格见开发指南的「应用命令」一节。
-
-面向 agent：请遵循 [AGENTS.md](AGENTS.md)。
-
-## 引用
-
-```bibtex
-@misc{deepseek-harness2026,
-  title={DeepSeek Harness: Everything is a Plugin},
-  author={DeepSeek-AI},
-  year={2026},
-  publisher={GitHub},
-  howpublished={\url{https://github.com/deepseek-ai/deepseek-harness}},
-}
-```
+从[架构](docs/architecture.zh.md)、[开发指南](docs/development.zh.md)和 [AGENTS.md](AGENTS.md)开始。本仓库扩展 DeepSeek Harness，上游框架源码保留原包名和许可证。
 
 ## 许可证
 
-[MIT](LICENSE)
-
-第三方依赖及其许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+[MIT](LICENSE)。依赖许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

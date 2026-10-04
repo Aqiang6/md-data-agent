@@ -33,6 +33,8 @@ The [format references](persistence-changes/historical-formats/README.md) cover 
 | `event:compaction/prune` | event | `7f7fd5a6b0064f597534b29ff62ef26e786dffccf5e14f654a7d4fcea2c35f04` | [`{ type: "compaction/prune" }`](#persistence-type-sha256-7f7fd5a6b0064f597534b29ff62ef26e786dffccf5e14f654a7d4fcea2c35f04) |
 | `event:compaction/start` | event | `db874d463b0fdec77e9da1c4568f37cb70bd6596781eb93800db44fb8a116965` | [`{ type: "compaction/start" }`](#persistence-type-sha256-db874d463b0fdec77e9da1c4568f37cb70bd6596781eb93800db44fb8a116965) |
 | `event:compaction/summary` | event | `e2f9a41e0989f54ed8cee80f8db2bcf9d60a5c810dc9d45b83fa050b9dce7602` | [`{ type: "compaction/summary" }`](#persistence-type-sha256-e2f9a41e0989f54ed8cee80f8db2bcf9d60a5c810dc9d45b83fa050b9dce7602) |
+| `event:data-agent/request` | event | `622f940fe36d3cd4f9ce377478111088b159c987d58e41bd8886153d3eae5986` | [`{ type: "data-agent/request" }`](#persistence-type-sha256-622f940fe36d3cd4f9ce377478111088b159c987d58e41bd8886153d3eae5986) |
+| `event:data-agent/request-end` | event | `1451d96ca792749c1ea9e711ca6c205ae87f5c06a68aca887d720120a0e51778` | [`{ type: "data-agent/request-end" }`](#persistence-type-sha256-1451d96ca792749c1ea9e711ca6c205ae87f5c06a68aca887d720120a0e51778) |
 | `event:deliverables/presented` | event | `13d3d180f977bf78081d487ffa0ecb75857349bcab29a5a3fb48189fca2a6176` | [`{ type: "deliverables/presented" }`](#persistence-type-sha256-13d3d180f977bf78081d487ffa0ecb75857349bcab29a5a3fb48189fca2a6176) |
 | `event:developer/message` | event | `eef4ef54dc7a133d47448a4ee822e45a351314923ef5f66db34c8b24e4b32d80` | [`{ type: "developer/message" }`](#persistence-type-sha256-eef4ef54dc7a133d47448a4ee822e45a351314923ef5f66db34c8b24e4b32d80) |
 | `event:feedback/message-delete` | event | `3ee93b06f3a125850337602bcdf155d2538c43a5c944ec55b1b3c365152d6796` | [`{ type: "feedback/message-delete" }`](#persistence-type-sha256-3ee93b06f3a125850337602bcdf155d2538c43a5c944ec55b1b3c365152d6796) |
@@ -68,8 +70,10 @@ The [format references](persistence-changes/historical-formats/README.md) cover 
 | `event:todo/write` | event | `b978cff734e62143eb56c9125423ec275405eda969802d42aaf73ecb987d3b26` | [`{ type: "todo/write" }`](#persistence-type-sha256-b978cff734e62143eb56c9125423ec275405eda969802d42aaf73ecb987d3b26) |
 | `event:tool-workflow/agent-end` | event | `babf9ee4d1af62bf6c3a8103737f7a5e4e78ce179be835ce05a38803e15884b7` | [`{ type: "tool-workflow/agent-end" }`](#persistence-type-sha256-babf9ee4d1af62bf6c3a8103737f7a5e4e78ce179be835ce05a38803e15884b7) |
 | `event:tool-workflow/agent-start` | event | `5f26a6c20b37632f8f57729d171c671def4683d994ac6257a8dffcd855101627` | [`{ type: "tool-workflow/agent-start" }`](#persistence-type-sha256-5f26a6c20b37632f8f57729d171c671def4683d994ac6257a8dffcd855101627) |
+| `event:tool-workflow/log` | event | `d1a76ca217758d3ffe98fa1a5edbe84d754b66228cd9436ef2fd8c4de38e1886` | [`{ type: "tool-workflow/log" }`](#persistence-type-sha256-d1a76ca217758d3ffe98fa1a5edbe84d754b66228cd9436ef2fd8c4de38e1886) |
+| `event:tool-workflow/phase` | event | `49d14928d15c22e1caaab450eb5e0df37bd0165d0c2d460cbff8cdea371aa28b` | [`{ type: "tool-workflow/phase" }`](#persistence-type-sha256-49d14928d15c22e1caaab450eb5e0df37bd0165d0c2d460cbff8cdea371aa28b) |
 | `event:tool-workflow/run-end` | event | `42e0916e0dda5f6d1e7bb05d8514717147c036a79c9f36085683469516c1fd3f` | [`{ type: "tool-workflow/run-end" }`](#persistence-type-sha256-42e0916e0dda5f6d1e7bb05d8514717147c036a79c9f36085683469516c1fd3f) |
-| `event:tool-workflow/run-start` | event | `c1f9e0405de6d18cabb9ee70782a027f9bbdc57e5abec9dcccdd56119e2e9058` | [`{ type: "tool-workflow/run-start" }`](#persistence-type-sha256-c1f9e0405de6d18cabb9ee70782a027f9bbdc57e5abec9dcccdd56119e2e9058) |
+| `event:tool-workflow/run-start` | event | `fa979c353d6662370278ebad515bd45254413c2a7c60618d9f4f0413ac2ef42c` | [`{ type: "tool-workflow/run-start" }`](#persistence-type-sha256-fa979c353d6662370278ebad515bd45254413c2a7c60618d9f4f0413ac2ef42c) |
 | `event:tool/call` | event | `3b1be838223869fe0a08210db85bf773796ed3f2373ac16555dff227cade0c48` | [`{ type: "tool/call" }`](#persistence-type-sha256-3b1be838223869fe0a08210db85bf773796ed3f2373ac16555dff227cade0c48) |
 | `event:tool/ptc-dispatch` | event | `100f6dca1468538239522cde3533e5bd721d0f1a7b50bea8b0eb533ea6c96163` | [`{ type: "tool/ptc-dispatch" }`](#persistence-type-sha256-100f6dca1468538239522cde3533e5bd721d0f1a7b50bea8b0eb533ea6c96163) |
 | `event:tool/ptc-dispatch-start` | event | `ec38b5949af8eacaf00df002f4acbe344f934f8a061e9cdc65a52a48e5f6dd93` | [`{ type: "tool/ptc-dispatch-start" }`](#persistence-type-sha256-ec38b5949af8eacaf00df002f4acbe344f934f8a061e9cdc65a52a48e5f6dd93) |
@@ -467,6 +471,39 @@ Source: [`packages/compaction/compaction/src/types.ts:24`](../packages/compactio
 Types: [ContentBlock](subsystems/core.md) · [TokenUsage](subsystems/llm-streaming.md)
 
 Source: [`packages/compaction/compaction/src/types.ts:34`](../packages/compaction/compaction/src/types.ts)
+
+### `data-agent/*`
+
+<a id="data-agentrequest--log-only"></a>
+
+#### `data-agent/request` — log-only
+
+```ts persistence-catalog
+/** Actual harness request locator; does not affect message reconstruction. */
+'data-agent/request': {
+  requestId: RequestId
+  turn: number
+  step: number
+  attempt: number
+  inputThroughSeq: number
+  sha256: string
+}
+```
+
+Source: [`packages/experimental/data-agent/src/trace.ts:60`](../packages/experimental/data-agent/src/trace.ts)
+
+<a id="data-agentrequest-end--log-only"></a>
+
+#### `data-agent/request-end` — log-only
+
+```ts persistence-catalog
+/** Model attempt settlement; tools run outside this interval. */
+'data-agent/request-end': { requestId: RequestId; status: string; usage?: TokenUsage; finish?: string; error?: string }
+```
+
+Types: [TokenUsage](subsystems/llm-streaming.md)
+
+Source: [`packages/experimental/data-agent/src/trace.ts:69`](../packages/experimental/data-agent/src/trace.ts)
 
 ### `deliverables/*`
 
@@ -1150,7 +1187,7 @@ Source: [`packages/core/session/src/types.ts:375`](../packages/core/session/src/
 'tool-workflow/agent-end': ToolWorkflowAgentEndData
 ```
 
-Source: [`packages/workflow/tool-workflow/src/types.ts:57`](../packages/workflow/tool-workflow/src/types.ts)
+Source: [`packages/workflow/tool-workflow/src/types.ts:64`](../packages/workflow/tool-workflow/src/types.ts)
 
 <a id="tool-workflowagent-start--log-only"></a>
 
@@ -1164,7 +1201,29 @@ Source: [`packages/workflow/tool-workflow/src/types.ts:57`](../packages/workflow
 'tool-workflow/agent-start': ToolWorkflowAgentStartData
 ```
 
-Source: [`packages/workflow/tool-workflow/src/types.ts:52`](../packages/workflow/tool-workflow/src/types.ts)
+Source: [`packages/workflow/tool-workflow/src/types.ts:59`](../packages/workflow/tool-workflow/src/types.ts)
+
+<a id="tool-workflowlog--log-only"></a>
+
+#### `tool-workflow/log` — log-only
+
+```ts persistence-catalog
+/** Informational workflow progress message. */
+'tool-workflow/log': { readonly runId: WorkflowRunId; readonly message: string }
+```
+
+Source: [`packages/workflow/tool-workflow/src/types.ts:49`](../packages/workflow/tool-workflow/src/types.ts)
+
+<a id="tool-workflowphase--log-only"></a>
+
+#### `tool-workflow/phase` — log-only
+
+```ts persistence-catalog
+/** Informational progress phase; never declares execution dependencies. */
+'tool-workflow/phase': { readonly runId: WorkflowRunId; readonly title: string }
+```
+
+Source: [`packages/workflow/tool-workflow/src/types.ts:47`](../packages/workflow/tool-workflow/src/types.ts)
 
 <a id="tool-workflowrun-end--log-only"></a>
 
@@ -1178,7 +1237,7 @@ Source: [`packages/workflow/tool-workflow/src/types.ts:52`](../packages/workflow
 'tool-workflow/run-end': ToolWorkflowRunEndData
 ```
 
-Source: [`packages/workflow/tool-workflow/src/types.ts:62`](../packages/workflow/tool-workflow/src/types.ts)
+Source: [`packages/workflow/tool-workflow/src/types.ts:69`](../packages/workflow/tool-workflow/src/types.ts)
 
 <a id="tool-workflowrun-start--log-only"></a>
 
@@ -1192,7 +1251,7 @@ Source: [`packages/workflow/tool-workflow/src/types.ts:62`](../packages/workflow
 'tool-workflow/run-start': ToolWorkflowRunStartData
 ```
 
-Source: [`packages/workflow/tool-workflow/src/types.ts:47`](../packages/workflow/tool-workflow/src/types.ts)
+Source: [`packages/workflow/tool-workflow/src/types.ts:54`](../packages/workflow/tool-workflow/src/types.ts)
 
 ### `turn/*`
 
@@ -1628,6 +1687,22 @@ SHA-256: `7624ca28c61ca0eaa4f015140f3cea6e0c16cce2f2960fab5f531203d253903e`
 SHA-256: `18fce9540bb20897a66275499faee6b8296c97e9901fa1ff45a191772448ad1a`
 
 `"danger-full-access"`
+
+<a id="persistence-type-sha256-79703355957df83af5f198b21208799e316aab2b1ffbab5a9654e6c59d0dd3b5"></a>
+
+### `"data-agent/request"`
+
+SHA-256: `79703355957df83af5f198b21208799e316aab2b1ffbab5a9654e6c59d0dd3b5`
+
+`"data-agent/request"`
+
+<a id="persistence-type-sha256-55f3a229c9064562d013be6795bfda9365533124dd20d56ed54c311d36a294b7"></a>
+
+### `"data-agent/request-end"`
+
+SHA-256: `55f3a229c9064562d013be6795bfda9365533124dd20d56ed54c311d36a294b7`
+
+`"data-agent/request-end"`
 
 <a id="persistence-type-sha256-76632533f67879dcb346fcae640540dbc89b2472b0bce88c59f7e48fc5c0e668"></a>
 
@@ -2714,6 +2789,22 @@ SHA-256: `5d17f27a1ef9f7026c0232714adf7573961536d75f3303ca97973975f5af170e`
 SHA-256: `ad92f473a03ae72599ff26c86e897c25e16269519ad2a87340f0bea946517af8`
 
 `"tool-workflow/agent-start"`
+
+<a id="persistence-type-sha256-ce0391c7ed060f10f5162bd217d9245dd02c08737684bc0591510ed38dc1d058"></a>
+
+### `"tool-workflow/log"`
+
+SHA-256: `ce0391c7ed060f10f5162bd217d9245dd02c08737684bc0591510ed38dc1d058`
+
+`"tool-workflow/log"`
+
+<a id="persistence-type-sha256-d3ceeabb961ef999c335289e85e78844d1d6f39bb9752eb19315ec8b59d0c9e5"></a>
+
+### `"tool-workflow/phase"`
+
+SHA-256: `d3ceeabb961ef999c335289e85e78844d1d6f39bb9752eb19315ec8b59d0c9e5`
+
+`"tool-workflow/phase"`
 
 <a id="persistence-type-sha256-fe792a6cd430494503837e21e79f91677704ccdd9e870c679aabd7d43ed47ddd"></a>
 
@@ -4997,7 +5088,7 @@ Array of [`ToolSchema`](#persistence-type-sha256-66ba70f6f068da443f969a0b947a013
 
 SHA-256: `c0ea97bc89dfc46fa94eab956f5c3ee6af2f964aa7db6327cb18b451f207bef7`
 
-Sources: [`packages/workflow/tool-workflow/src/types.ts:29`](../packages/workflow/tool-workflow/src/types.ts)
+Sources: [`packages/workflow/tool-workflow/src/types.ts:32`](../packages/workflow/tool-workflow/src/types.ts)
 
 | Property | Presence | Type |
 |---|---|---|
@@ -5015,7 +5106,7 @@ Sources: [`packages/workflow/tool-workflow/src/types.ts:29`](../packages/workflo
 
 SHA-256: `9a410ddf56792b2b7cd4a224a2e54dc4dee30a8e8e6b1c2b9a1d19992b217adc`
 
-Sources: [`packages/workflow/tool-workflow/src/types.ts:20`](../packages/workflow/tool-workflow/src/types.ts)
+Sources: [`packages/workflow/tool-workflow/src/types.ts:23`](../packages/workflow/tool-workflow/src/types.ts)
 
 | Property | Presence | Type |
 |---|---|---|
@@ -5035,14 +5126,14 @@ Sources: [`packages/workflow/tool-workflow/src/types.ts:20`](../packages/workflo
 
 SHA-256: `7f9365bae9fcb73e1e34061a1acfe0422c1a5fd351848cace9bebbe806f28462`
 
-Sources: [`packages/workflow/tool-workflow/src/types.ts:36`](../packages/workflow/tool-workflow/src/types.ts)
+Sources: [`packages/workflow/tool-workflow/src/types.ts:39`](../packages/workflow/tool-workflow/src/types.ts)
 
 | Property | Presence | Type |
 |---|---|---|
 | `runId` | required | `string` |
 | `stopReason` | required | [`WorkflowStopReason`](#persistence-type-sha256-8465ece5e9d9007c038b357015d849c15262cb0bc25abc59e47692d87ee01a15) |
 
-<a id="persistence-type-sha256-a6da9ad5d42ae83a6833a8288b076688e8e0801633ea36cbdd8a30a6d9f3160c"></a>
+<a id="persistence-type-sha256-b8c1931918795e2564f6e57dd9e6d76bce2b0933da2dad34cf80c7bae2ac3c21"></a>
 
 <a id="persistence-type-packagesworkflowtool-workflowsrctypeststoolworkflowrunstartdata"></a>
 
@@ -5050,12 +5141,13 @@ Sources: [`packages/workflow/tool-workflow/src/types.ts:36`](../packages/workflo
 
 ### `ToolWorkflowRunStartData`
 
-SHA-256: `a6da9ad5d42ae83a6833a8288b076688e8e0801633ea36cbdd8a30a6d9f3160c`
+SHA-256: `b8c1931918795e2564f6e57dd9e6d76bce2b0933da2dad34cf80c7bae2ac3c21`
 
-Sources: [`packages/workflow/tool-workflow/src/types.ts:14`](../packages/workflow/tool-workflow/src/types.ts)
+Sources: [`packages/workflow/tool-workflow/src/types.ts:15`](../packages/workflow/tool-workflow/src/types.ts)
 
 | Property | Presence | Type |
 |---|---|---|
+| `callId` | optional | `string` |
 | `name` | required | `string` |
 | `runId` | required | `string` |
 
@@ -5252,6 +5344,8 @@ Array of `number`.
 
 <a id="persistence-type-packagesexperimentalagent-teamsrctypeststeamtaskid"></a>
 
+<a id="persistence-type-packagesexperimentaldata-agentsrcbrandtsrequestid"></a>
+
 <a id="persistence-type-packagesfeedbackmessage-feedbacksrctypestsmessagefeedbackversion"></a>
 
 <a id="persistence-type-packagesgoalgoalsrctypestsgoalid"></a>
@@ -5288,6 +5382,8 @@ Array of `number`.
 
 <a id="persistence-type-reasoningeffortid"></a>
 
+<a id="persistence-type-requestid"></a>
+
 <a id="persistence-type-retryid"></a>
 
 <a id="persistence-type-scheduleid"></a>
@@ -5318,7 +5414,7 @@ Array of `number`.
 
 SHA-256: `4cd48f3e5108bd6ebedf7301c3638839b8b2b9db8dbd493974177fbdeb91a01b`
 
-Sources: [`packages/api/session-controller/src/types.ts:398`](../packages/api/session-controller/src/types.ts) · [`packages/attachment/attachment/src/brand.ts:6`](../packages/attachment/attachment/src/brand.ts) · [`packages/compaction/compaction/src/brand.ts:4`](../packages/compaction/compaction/src/brand.ts) · [`packages/core/session/src/types.ts:20`](../packages/core/session/src/types.ts) · [`packages/experimental/agent-team/src/types.ts:20`](../packages/experimental/agent-team/src/types.ts) · [`packages/experimental/agent-team/src/types.ts:32`](../packages/experimental/agent-team/src/types.ts) · [`packages/experimental/agent-team/src/types.ts:8`](../packages/experimental/agent-team/src/types.ts) · [`packages/feedback/message-feedback/src/types.ts:14`](../packages/feedback/message-feedback/src/types.ts) · [`packages/goal/goal/src/types.ts:17`](../packages/goal/goal/src/types.ts) · [`packages/interaction/commands/src/brand.ts:31`](../packages/interaction/commands/src/brand.ts) · [`packages/interaction/user-approval/src/types.ts:17`](../packages/interaction/user-approval/src/types.ts) · [`packages/llm/llm-retry/src/brand.ts:4`](../packages/llm/llm-retry/src/brand.ts) · [`packages/llm/llm/src/brand.ts:16`](../packages/llm/llm/src/brand.ts) · [`packages/llm/llm/src/brand.ts:31`](../packages/llm/llm/src/brand.ts) · [`packages/llm/llm/src/brand.ts:43`](../packages/llm/llm/src/brand.ts) · [`packages/llm/llm/src/brand.ts:67`](../packages/llm/llm/src/brand.ts) · [`packages/schedule/schedule/src/types.ts:14`](../packages/schedule/schedule/src/types.ts) · [`packages/session/session-title/src/index.ts:42`](../packages/session/session-title/src/index.ts) · [`packages/session/session-title/src/types.ts:17`](../packages/session/session-title/src/types.ts) · [`packages/webhook/webhook/src/brand.ts:12`](../packages/webhook/webhook/src/brand.ts) · [`packages/webhook/webhook/src/brand.ts:6`](../packages/webhook/webhook/src/brand.ts) · [`packages/webhook/webhook/src/brand.ts:9`](../packages/webhook/webhook/src/brand.ts) · [`packages/workflow/workflow/src/types.ts:13`](../packages/workflow/workflow/src/types.ts)
+Sources: [`packages/api/session-controller/src/types.ts:398`](../packages/api/session-controller/src/types.ts) · [`packages/attachment/attachment/src/brand.ts:6`](../packages/attachment/attachment/src/brand.ts) · [`packages/compaction/compaction/src/brand.ts:4`](../packages/compaction/compaction/src/brand.ts) · [`packages/core/session/src/types.ts:20`](../packages/core/session/src/types.ts) · [`packages/experimental/agent-team/src/types.ts:20`](../packages/experimental/agent-team/src/types.ts) · [`packages/experimental/agent-team/src/types.ts:32`](../packages/experimental/agent-team/src/types.ts) · [`packages/experimental/agent-team/src/types.ts:8`](../packages/experimental/agent-team/src/types.ts) · [`packages/experimental/data-agent/src/brand.ts:11`](../packages/experimental/data-agent/src/brand.ts) · [`packages/feedback/message-feedback/src/types.ts:14`](../packages/feedback/message-feedback/src/types.ts) · [`packages/goal/goal/src/types.ts:17`](../packages/goal/goal/src/types.ts) · [`packages/interaction/commands/src/brand.ts:31`](../packages/interaction/commands/src/brand.ts) · [`packages/interaction/user-approval/src/types.ts:17`](../packages/interaction/user-approval/src/types.ts) · [`packages/llm/llm-retry/src/brand.ts:4`](../packages/llm/llm-retry/src/brand.ts) · [`packages/llm/llm/src/brand.ts:16`](../packages/llm/llm/src/brand.ts) · [`packages/llm/llm/src/brand.ts:31`](../packages/llm/llm/src/brand.ts) · [`packages/llm/llm/src/brand.ts:43`](../packages/llm/llm/src/brand.ts) · [`packages/llm/llm/src/brand.ts:67`](../packages/llm/llm/src/brand.ts) · [`packages/schedule/schedule/src/types.ts:14`](../packages/schedule/schedule/src/types.ts) · [`packages/session/session-title/src/index.ts:42`](../packages/session/session-title/src/index.ts) · [`packages/session/session-title/src/types.ts:17`](../packages/session/session-title/src/types.ts) · [`packages/webhook/webhook/src/brand.ts:12`](../packages/webhook/webhook/src/brand.ts) · [`packages/webhook/webhook/src/brand.ts:6`](../packages/webhook/webhook/src/brand.ts) · [`packages/webhook/webhook/src/brand.ts:9`](../packages/webhook/webhook/src/brand.ts) · [`packages/workflow/workflow/src/types.ts:13`](../packages/workflow/workflow/src/types.ts)
 
 `string`
 
@@ -5550,6 +5646,23 @@ Sources: [`packages/core/session/src/types.ts:361`](../packages/core/session/src
 | `arguments` | required | `string` |
 | `callId` | required | `string` |
 | `name` | required | `string` |
+| `step` | required | `number` |
+| `turn` | required | `number` |
+
+<a id="persistence-type-sha256-4d49141f51a8b39e4806c7cfe78ee0612c9df4150eaf13f9b5333a44bfba12ce"></a>
+
+### `{ attempt, inputThroughSeq, requestId, sha256, … }`
+
+SHA-256: `4d49141f51a8b39e4806c7cfe78ee0612c9df4150eaf13f9b5333a44bfba12ce`
+
+Sources: [`packages/experimental/data-agent/src/trace.ts:60`](../packages/experimental/data-agent/src/trace.ts)
+
+| Property | Presence | Type |
+|---|---|---|
+| `attempt` | required | `number` |
+| `inputThroughSeq` | required | `number` |
+| `requestId` | required | `string` |
+| `sha256` | required | `string` |
 | `step` | required | `number` |
 | `turn` | required | `number` |
 
@@ -5916,6 +6029,22 @@ Sources: [`packages/core/session/src/types.ts:212`](../packages/core/session/src
 |---|---|---|
 | `error` | required | [`LlmFailure`](#persistence-type-sha256-5f2117d1856a5ab43c28371faa978ebfaa48f8c7d734ea3fc94842210df83dca) |
 | `kind` | required | `"error"` |
+
+<a id="persistence-type-sha256-18c6ac31c078e58ad36f14843d4d3462afc3a13b8e63ecbfb54851736d71882b"></a>
+
+### `{ error?, finish?, requestId, status, … }`
+
+SHA-256: `18c6ac31c078e58ad36f14843d4d3462afc3a13b8e63ecbfb54851736d71882b`
+
+Sources: [`packages/experimental/data-agent/src/trace.ts:69`](../packages/experimental/data-agent/src/trace.ts)
+
+| Property | Presence | Type |
+|---|---|---|
+| `error` | optional | `string` |
+| `finish` | optional | `string` |
+| `requestId` | required | `string` |
+| `status` | required | `string` |
+| `usage` | optional | [`TokenUsage`](#persistence-type-sha256-fec5442b9ee4122e10514d81d5a43648003fe8bfb7ee2ba50c0cdbdd383ed394) |
 
 <a id="persistence-type-sha256-5302e763151277614b97e77f00e3b326694c6c1247b916a20503c344dc970777"></a>
 
@@ -7384,6 +7513,19 @@ Sources: [`packages/experimental/agent-team/src/types.ts:232`](../packages/exper
 | `teamId` | required | `string` |
 | `version` | required | `2` |
 
+<a id="persistence-type-sha256-f708c8fe733e61b0df925cfc6bc650859a248ee57078313f589ca63af21ff62b"></a>
+
+### `{ message, runId }`
+
+SHA-256: `f708c8fe733e61b0df925cfc6bc650859a248ee57078313f589ca63af21ff62b`
+
+Sources: [`packages/workflow/tool-workflow/src/types.ts:49`](../packages/workflow/tool-workflow/src/types.ts)
+
+| Property | Presence | Type |
+|---|---|---|
+| `message` | required | `string` |
+| `runId` | required | `string` |
+
 <a id="persistence-type-sha256-6bc8e51124d0874bc89e1d0ceff381a9c3cd0fc240667d69f841ce4f60f65fe5"></a>
 
 ### `{ message, step, turn }`
@@ -7490,6 +7632,19 @@ Sources: [`packages/web/web-search-deepseek/src/provider.ts:64`](../packages/web
 |---|---|---|
 | `content` | required | [`tuple (1 positions)`](#persistence-type-sha256-8f6d609794bf5afc01d7ccf3e03811d32f4b8047f58a2c9a98db0154c2ad7cb9) |
 | `role` | required | `"user"` |
+
+<a id="persistence-type-sha256-77c993b445bf2654a9e7146d704c691e98920922f8c7467e8d0ee845ec45f562"></a>
+
+### `{ runId, title }`
+
+SHA-256: `77c993b445bf2654a9e7146d704c691e98920922f8c7467e8d0ee845ec45f562`
+
+Sources: [`packages/workflow/tool-workflow/src/types.ts:47`](../packages/workflow/tool-workflow/src/types.ts)
+
+| Property | Presence | Type |
+|---|---|---|
+| `runId` | required | `string` |
+| `title` | required | `string` |
 
 <a id="persistence-type-sha256-8bb8c3751a6ce64b61aba1ec7ae798c00a5803c4d868a0430873216c6569ed52"></a>
 
@@ -7846,6 +8001,38 @@ SHA-256: `e2f9a41e0989f54ed8cee80f8db2bcf9d60a5c810dc9d45b83fa050b9dce7602`
 | `seq` | required | `number` |
 | `time` | required | `number` |
 | `type` | required | `"compaction/summary"` |
+
+<a id="persistence-type-sha256-622f940fe36d3cd4f9ce377478111088b159c987d58e41bd8886153d3eae5986"></a>
+
+<a id="persistence-type-eventdata-agentrequest"></a>
+
+### `{ type: "data-agent/request" }`
+
+SHA-256: `622f940fe36d3cd4f9ce377478111088b159c987d58e41bd8886153d3eae5986`
+
+| Property | Presence | Type |
+|---|---|---|
+| `data` | required | [`{ attempt, inputThroughSeq, requestId, sha256, … }`](#persistence-type-sha256-4d49141f51a8b39e4806c7cfe78ee0612c9df4150eaf13f9b5333a44bfba12ce) |
+| `ignorable` | optional | `true` |
+| `seq` | required | `number` |
+| `time` | required | `number` |
+| `type` | required | `"data-agent/request"` |
+
+<a id="persistence-type-sha256-1451d96ca792749c1ea9e711ca6c205ae87f5c06a68aca887d720120a0e51778"></a>
+
+<a id="persistence-type-eventdata-agentrequest-end"></a>
+
+### `{ type: "data-agent/request-end" }`
+
+SHA-256: `1451d96ca792749c1ea9e711ca6c205ae87f5c06a68aca887d720120a0e51778`
+
+| Property | Presence | Type |
+|---|---|---|
+| `data` | required | [`{ error?, finish?, requestId, status, … }`](#persistence-type-sha256-18c6ac31c078e58ad36f14843d4d3462afc3a13b8e63ecbfb54851736d71882b) |
+| `ignorable` | optional | `true` |
+| `seq` | required | `number` |
+| `time` | required | `number` |
+| `type` | required | `"data-agent/request-end"` |
 
 <a id="persistence-type-sha256-13d3d180f977bf78081d487ffa0ecb75857349bcab29a5a3fb48189fca2a6176"></a>
 
@@ -8519,6 +8706,38 @@ SHA-256: `5f26a6c20b37632f8f57729d171c671def4683d994ac6257a8dffcd855101627`
 | `time` | required | `number` |
 | `type` | required | `"tool-workflow/agent-start"` |
 
+<a id="persistence-type-sha256-d1a76ca217758d3ffe98fa1a5edbe84d754b66228cd9436ef2fd8c4de38e1886"></a>
+
+<a id="persistence-type-eventtool-workflowlog"></a>
+
+### `{ type: "tool-workflow/log" }`
+
+SHA-256: `d1a76ca217758d3ffe98fa1a5edbe84d754b66228cd9436ef2fd8c4de38e1886`
+
+| Property | Presence | Type |
+|---|---|---|
+| `data` | required | [`{ message, runId }`](#persistence-type-sha256-f708c8fe733e61b0df925cfc6bc650859a248ee57078313f589ca63af21ff62b) |
+| `ignorable` | optional | `true` |
+| `seq` | required | `number` |
+| `time` | required | `number` |
+| `type` | required | `"tool-workflow/log"` |
+
+<a id="persistence-type-sha256-49d14928d15c22e1caaab450eb5e0df37bd0165d0c2d460cbff8cdea371aa28b"></a>
+
+<a id="persistence-type-eventtool-workflowphase"></a>
+
+### `{ type: "tool-workflow/phase" }`
+
+SHA-256: `49d14928d15c22e1caaab450eb5e0df37bd0165d0c2d460cbff8cdea371aa28b`
+
+| Property | Presence | Type |
+|---|---|---|
+| `data` | required | [`{ runId, title }`](#persistence-type-sha256-77c993b445bf2654a9e7146d704c691e98920922f8c7467e8d0ee845ec45f562) |
+| `ignorable` | optional | `true` |
+| `seq` | required | `number` |
+| `time` | required | `number` |
+| `type` | required | `"tool-workflow/phase"` |
+
 <a id="persistence-type-sha256-42e0916e0dda5f6d1e7bb05d8514717147c036a79c9f36085683469516c1fd3f"></a>
 
 <a id="persistence-type-eventtool-workflowrun-end"></a>
@@ -8535,17 +8754,17 @@ SHA-256: `42e0916e0dda5f6d1e7bb05d8514717147c036a79c9f36085683469516c1fd3f`
 | `time` | required | `number` |
 | `type` | required | `"tool-workflow/run-end"` |
 
-<a id="persistence-type-sha256-c1f9e0405de6d18cabb9ee70782a027f9bbdc57e5abec9dcccdd56119e2e9058"></a>
+<a id="persistence-type-sha256-fa979c353d6662370278ebad515bd45254413c2a7c60618d9f4f0413ac2ef42c"></a>
 
 <a id="persistence-type-eventtool-workflowrun-start"></a>
 
 ### `{ type: "tool-workflow/run-start" }`
 
-SHA-256: `c1f9e0405de6d18cabb9ee70782a027f9bbdc57e5abec9dcccdd56119e2e9058`
+SHA-256: `fa979c353d6662370278ebad515bd45254413c2a7c60618d9f4f0413ac2ef42c`
 
 | Property | Presence | Type |
 |---|---|---|
-| `data` | required | [`ToolWorkflowRunStartData`](#persistence-type-sha256-a6da9ad5d42ae83a6833a8288b076688e8e0801633ea36cbdd8a30a6d9f3160c) |
+| `data` | required | [`ToolWorkflowRunStartData`](#persistence-type-sha256-b8c1931918795e2564f6e57dd9e6d76bce2b0933da2dad34cf80c7bae2ac3c21) |
 | `ignorable` | optional | `true` |
 | `seq` | required | `number` |
 | `time` | required | `number` |

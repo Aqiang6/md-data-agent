@@ -533,6 +533,14 @@ const SERVICE_ROLES: ServiceRole[] = [
     note: 'Eagerly mounts YAML-declared preset revisions, binds Agents and cold readers to scoped contributions, and retains retired revisions until their last user releases them.',
   },
   {
+    key: 'dataAgent',
+    pkg: 'experimental-data-agent',
+    title: 'Host data runtime for scoped analysis',
+    mode: 'core',
+    consumers: ['experimental-data-agent'],
+    note: 'The Host owns connections and artifacts; analysis preset scopes install their tools and publish source context through the shared runtime.',
+  },
+  {
     key: 'commands',
     pkg: 'commands',
     title: 'Human command registry',

@@ -23,6 +23,13 @@ declare module '@deepseek-ai/dsh-llm' {
 }
 
 describe('Session', () => {
+  it('marks optional log-only observations without creating transcript nodes', () => {
+    const session = Session.create(SessionId('ignorable-observation'))
+    const event = session.append('turn/start', { turn: 1 }, { ignorable: true })
+    expect(event.ignorable).toBe(true)
+    expect(session.deriveMessages()).toEqual([])
+    expect(session.append('step/start', { turn: 1, step: 1 }).ignorable).toBeUndefined()
+  })
   it('exposes one stable readonly surface view', () => {
     const session = Session.create(SessionId('surface-view'))
     const surface = session.surface

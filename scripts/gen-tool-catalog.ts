@@ -76,6 +76,9 @@ import type { WorkflowRun, WorkflowStartRequest } from '@deepseek-ai/dsh-workflo
 import * as ToolRalph from '@deepseek-ai/dsh-tool-ralph'
 import * as ToolWorkflow from '@deepseek-ai/dsh-tool-workflow'
 import * as ToolWorkspaceDependencies from '@deepseek-ai/dsh-tool-workspace-dependencies'
+import Commands from '@deepseek-ai/dsh-commands'
+import * as DataAgent from '@deepseek-ai/dsh-experimental-data-agent'
+import { installAnalysisTools } from '@deepseek-ai/dsh-experimental-data-agent/src/analysis-tools.ts'
 import { githubSlug } from './verify-md-links.ts'
 
 /** Attachment seam marker that makes the attachments-conditional `read_image` schema harvestable. */
@@ -203,6 +206,25 @@ export interface ToolPackage {
  * guard proves it is exhaustive against the on-disk glob.
  */
 const TOOL_PACKAGES: ToolPackage[] = [
+  {
+    pkg: '@deepseek-ai/dsh-experimental-data-agent',
+    dir: 'data-agent',
+    source: 'packages/experimental/data-agent/src/analysis-tools.ts',
+    requires: ['ctx.dataAgent', 'ctx.tools', 'ctx.commands', 'ctx.sessionProjections', 'ctx.systemPrompt', 'ctx.sessions', 'ctx.sessionQuery', 'ctx.llm'],
+    writes: ['tool/call', 'tool/result', 'data-agent/request', 'data-agent/request-end', 'Session-owned evidence files'],
+    async mount(ctx) {
+      await ctx.plugin(Commands)
+      await ctx.plugin(SessionStore)
+      await ctx.plugin(SqliteSessionQueryEngine, { path: ':memory:', openAt: 'never' })
+      await ctx.plugin(LlmRuntime)
+      const config = DataAgent.Config()
+      config.uiDist = ''
+      await ctx.plugin(DataAgent, config)
+      installAnalysisTools(ctx, new DataAgent.DataCore(config), true)
+    },
+    note:
+      'SQL returns a preview and a complete result file; report writes Markdown content as downloadable files and benchmark records the final SQL for evaluation. The preset adds read-only file discovery and clarification, exposing benchmark only when enabled. The catalog disables the optional Web surface; schemas are shared with Web and SDK deployments.',
+  },
   {
     pkg: '@deepseek-ai/dsh-plugin-manager',
     dir: 'plugin-manager',

@@ -41,6 +41,8 @@ A subprocess backend, then the tools; the spill backend is optional and makes ca
 
 `sampleOverCapGlobResults` is required and has no fallback: deployments choose the over-cap ordering contract explicitly. When formatted spill succeeds, both modes preserve the complete sorted list in the spill artifact.
 
+Set `globToolName` to register file discovery under another name, such as `find`. Guidance, call cards and complete-result spill use that registered name.
+
 ### The tools
 
 | Tool | Arguments | Behavior |
@@ -52,10 +54,11 @@ Routine budgets stay out of the model-facing schema: a model that needs surround
 
 ### Configuration
 
-`sampleOverCapGlobResults` is required; the remaining keys are optional search caps with the defaults below.
+`sampleOverCapGlobResults` is required; the remaining keys have the defaults below.
 
 | Key | Default | Meaning |
 |---|---|---|
+| `globToolName` | `glob` | Registered file-discovery name; must be nonblank and differ from `grep` |
 | `sampleOverCapGlobResults` | none (required) | `true` samples an over-cap `glob` page across top-level entries; `false` keeps the modification-time-ordered head |
 | `globMaxResults` | `100` | Max paths one `glob` call shows inline |
 | `grepMaxMatches` | `250` | Max flat matches one `grep` call retains inline; later matches go to the formatted spill artifact |

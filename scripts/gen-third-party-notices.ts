@@ -266,7 +266,8 @@ export function claudeDistributionFromManifest(
  * @param name - the external package name, exactly as `node_modules` spells it.
  * @param expectedVersion - exact version required when the store retains more than one.
  * @returns the parsed manifest, or `undefined` when neither the prefix match
- *   nor the content scan finds the requested package version.
+ *   nor the content scan finds the requested package version. Empty directories
+ *   for uninstalled optional packages do not count as installed manifests.
  */
 export function virtualManifest(
   virtual: string,
@@ -276,7 +277,9 @@ export function virtualManifest(
   const prefix = `${name.replace('/', '+')}@`
   const entries = readdirSync(virtual)
   for (const entry of entries.filter(dir => dir.startsWith(prefix))) {
-    const manifest = JSON.parse(readFileSync(resolve(virtual, entry, 'node_modules', name, 'package.json'), 'utf8')) as VirtualManifest
+    const candidate = resolve(virtual, entry, 'node_modules', name, 'package.json')
+    if (!existsSync(candidate)) continue
+    const manifest = JSON.parse(readFileSync(candidate, 'utf8')) as VirtualManifest
     if (expectedVersion === undefined || manifest.version === expectedVersion) return manifest
   }
   for (const dir of entries) {

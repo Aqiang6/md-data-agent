@@ -15,6 +15,8 @@ packages:
   - python/sdk-runtime
 
 overrides:
+  # Markdown token-map augmentations must share one module instance across both clients.
+  micromark-util-types: '2.0.3'
   'extract-zip>yauzl': '3.4.0'
   '@deepseek-ai/cosmokit': 'link:vendor/cosmokit'
   '@deepseek-ai/schemastery': 'link:vendor/schemastery'
@@ -50,6 +52,8 @@ allowBuilds:
   electron-winstaller: false
   # Store-index rewriting only needs msgpackr's portable JavaScript codec.
   msgpackr-extract: false
+  # Data Agent async SQLite cancellation; the package selects bundled N-API prebuilds.
+  '@appthreat/sqlite3': true
 
 minimumReleaseAgeExclude:
   # Office engines and their API are qualified and released together by the kit repository.

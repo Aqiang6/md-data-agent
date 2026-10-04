@@ -256,6 +256,26 @@ Additional instructions from: nested\AGENTS.md`,
 })
 
 describe('normalizeSessionLog', () => {
+  it('normalizes volatile Data Agent request digests while retaining result digests and malformed locators', () => {
+    const digest = 'ab'.repeat(32)
+    const records = [
+      { type: 'data-agent/request', data: { sha256: digest } },
+      { type: 'data-agent/request', data: { sha256: 'invalid' } },
+      { type: 'data-agent/request', data: null },
+      { type: 'data-agent/request' },
+      { type: 'tool/result', data: { sha256: digest } },
+    ]
+    const output = normalizeSessionLog(records.map(record => JSON.stringify(record)).join('\n'), ctx)
+    expect(output.trim().split('\n').map((line) => {
+      const parsed: unknown = JSON.parse(line)
+      return parsed
+    })).toEqual([
+      { type: 'data-agent/request', data: { sha256: '{{requestSha256}}' } },
+      ...records.slice(1),
+    ])
+    expect(normalizeSessionLog(output, ctx)).toBe(output)
+  })
+
   it('normalizes only message-feedback item clocks', () => {
     const item = { messageId: 'answer', version: 'version', createdAt: 123, updatedAt: 456, note: 'keep 123' }
     const input = ['feedback/message-put', 'tool/result'].map(type => JSON.stringify({ type, data: { item } })).join('\n')

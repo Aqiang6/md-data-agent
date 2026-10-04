@@ -115,6 +115,44 @@ describe('default deployment (with dsh-fs-observation-policy)', () => {
   })
 
   describe('read', () => {
+    it('reads Windows-1252 text without changing its bytes', async () => {
+      const path = join(dir, 'prices.csv')
+      const bytes = Buffer.from([0x69, 0x64, 0x2c, 0x70, 0x72, 0x69, 0x63, 0x65, 0x0a, 0x31, 0x2c, 0xa3, 0x35, 0x0a])
+      await writeFile(path, bytes)
+      expect((await call('read', { file_path: 'prices.csv' })).isError).toBe(true)
+      const result = await call('read', { file_path: 'prices.csv', encoding: 'windows-1252' })
+      expect(result.isError).toBe(false)
+      expect(text(result)).toContain('2: 1,£5')
+      expect(await readFile(path)).toEqual(bytes)
+    })
+
+    it('keeps a Windows-1252 line count across bounded byte ranges', async () => {
+      await fiber.dispose()
+      fiber = await ctx.plugin(ToolFs, { readMaxBytes: 6 })
+      await writeFile(join(dir, 'symbols.csv'), Buffer.from([0xa3, 0x0a, 0x80, 0x0a, 0x93, 0x0a, 0xa3, 0x0a]))
+      const result = await call('read', { file_path: 'symbols.csv', encoding: 'windows-1252' })
+      expect(result.isError).toBe(false)
+      expect(result.meta).toMatchObject({ totalLines: 4, lines: [{ number: 1, text: '£' }, { number: 2, text: '€' }] })
+      expect(text(result)).toContain('Output capped.')
+      const remainder = await call('read', { file_path: 'symbols.csv', encoding: 'windows-1252', offset: 3 })
+      expect(remainder.isError).toBe(false)
+      expect(remainder.meta).toMatchObject({ totalLines: 4, lines: [{ number: 3, text: '“' }, { number: 4, text: '£' }] })
+    })
+
+    it('rejects NUL-containing bytes when Windows-1252 is selected', async () => {
+      await writeFile(join(dir, 'binary.dat'), Buffer.from([0xa3, 0x00, 0x80]))
+      const result = await call('read', { file_path: 'binary.dat', encoding: 'windows-1252' })
+      expect(result.isError).toBe(true)
+      expect(result.error).toMatchObject({ info: { code: 'FS_NOT_TEXT' } })
+      expect(text(result)).toContain('binary file')
+    })
+
+    it('rejects an unsupported explicit encoding', async () => {
+      await writeFile(join(dir, 'a.txt'), 'hello')
+      const result = await call('read', { file_path: 'a.txt', encoding: 'unknown-codec' })
+      expect(result.isError).toBe(true)
+    })
+
     it('returns line-numbered content', async () => {
       await writeFile(join(dir, 'a.txt'), 'alpha\nbeta')
       const result = await call('read', { file_path: 'a.txt' })

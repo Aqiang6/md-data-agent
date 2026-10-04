@@ -323,7 +323,7 @@
     },
     {
       "name": "read",
-      "description": "Read a UTF-8 text file and return line-numbered content.",
+      "description": "Read a text file and return line-numbered content.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -338,6 +338,14 @@
           "limit": {
             "type": "number",
             "description": "Maximum number of lines to return. Defaults to 2000."
+          },
+          "encoding": {
+            "type": "string",
+            "description": "Text encoding. Defaults to utf-8; use windows-1252 for Western legacy text.",
+            "enum": [
+              "utf-8",
+              "windows-1252"
+            ]
           }
         },
         "required": [
@@ -1049,7 +1057,7 @@
       },
       {
         "name": "read",
-        "description": "Read a UTF-8 text file and return line-numbered content.",
+        "description": "Read a text file and return line-numbered content.",
         "parameters": {
           "type": "object",
           "properties": {
@@ -1064,6 +1072,14 @@
             "limit": {
               "type": "number",
               "description": "Maximum number of lines to return. Defaults to 2000."
+            },
+            "encoding": {
+              "type": "string",
+              "description": "Text encoding. Defaults to utf-8; use windows-1252 for Western legacy text.",
+              "enum": [
+                "utf-8",
+                "windows-1252"
+              ]
             }
           },
           "required": [

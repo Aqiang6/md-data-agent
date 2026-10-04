@@ -41,6 +41,8 @@ kind: "package-reference"
 
 `sampleOverCapGlobResults` 是必填项且没有回退值：部署必须显式选择超过上限时的排序约定。格式化 spill 成功时，两种模式都会在 spill 产物中保留完整排序列表。
 
+设置 `globToolName` 可将文件发现注册为其他名称，例如 `find`。指南、调用卡片及完整结果 spill 都使用注册后的名称。
+
 ### 工具
 
 | 工具 | 参数 | 行为 |
@@ -52,10 +54,11 @@ kind: "package-reference"
 
 ### 配置
 
-`sampleOverCapGlobResults` 为必填；其余键是可选的搜索上限，默认值如下。
+`sampleOverCapGlobResults` 为必填；其余键的默认值如下。
 
 | 键 | 默认值 | 含义 |
 |---|---|---|
+| `globToolName` | `glob` | 注册的文件发现名称；不能为空白，也不能与 `grep` 相同 |
 | `sampleOverCapGlobResults` | 无（必填） | `true` 在顶层条目之间对超过上限的 `glob` 页面采样；`false` 保留按修改时间排序的前部 |
 | `globMaxResults` | `100` | 一次 `glob` 调用内联展示的最大路径数 |
 | `grepMaxMatches` | `250` | 一次 `grep` 调用内联保留的最大平铺匹配数；后续匹配写入格式化 spill 产物 |

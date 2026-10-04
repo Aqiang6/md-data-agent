@@ -19,6 +19,7 @@
 
 | 工具包 | 模型可见名称 | 依赖 | 写入／影响 | 随产品发布的别名 | 部署说明 |
 | --- | --- | --- | --- | --- | --- |
+| `@deepseek-ai/dsh-experimental-data-agent` | `benchmark`, `report`, `sql` | `ctx.dataAgent`, `ctx.tools`, `ctx.commands`, `ctx.sessionProjections`, `ctx.systemPrompt`, `ctx.sessions`, `ctx.sessionQuery`, `ctx.llm` | `tool/call`, `tool/result`, `data-agent/request`, `data-agent/request-end`, `Session-owned evidence files` | - | SQL 返回预览与完整结果文件；report 将 Markdown 内容生成可下载文件，benchmark 记录评测用的最终 SQL。Preset 增加只读文件检索与澄清，仅启用时开放 benchmark。本目录关闭可选 Web 界面；Web 与 SDK 部署共用工具定义。 |
 | `@deepseek-ai/dsh-plugin-manager` | `plugin_manager` | `ctx.tools`, `ctx.pluginManager`, `ctx.sandboxPolicy` | `tool/call`, `tool/result`, `user/message` | - | - |
 | `@deepseek-ai/dsh-mcp-resources` | `list_mcp_resource_templates`, `list_mcp_resources`, `read_mcp_resource` | `ctx.tools`, `ctx.mcpResources` | `tool/call`, `tool/result` | - | - |
 | `@deepseek-ai/dsh-experimental-browser-use-stagehand-native` | `stagehand_act`、`stagehand_extract`、`stagehand_navigate`、`stagehand_observe`、`stagehand_screenshot`、`stagehand_tabs` | `ctx.browserUse`、`ctx.agents`、`ctx.tools`、`ctx.systemPrompt` | `tool/call`、`tool/result` | - | - |
@@ -49,6 +50,109 @@
 | `@deepseek-ai/dsh-tool-workflow` | `workflow` | `ctx.tools`、`ctx.workflowEngine`、`ctx.systemPrompt`、`a calling Agent (exec.agent parents the script children)` | `tool/call`、`tool/result` | - | - |
 | `@deepseek-ai/dsh-tool-workspace-dependencies` | `load_workspace_dependencies` | `ctx.tools` | `tool/call`, `tool/result` | - | - |
 | `@deepseek-ai/dsh-tool-web` | `web_fetch`、`web_search` | `ctx.tools`、`ctx.web`、`ctx.systemPrompt` | `tool/call`、`tool/result` | - | web_search 和 web_fetch 将提供方选择置于 ctx.web 之后，使模型可见 schema 在更换后端时保持稳定。 |
+
+<a id="deepseek-aidsh-experimental-data-agent"></a>
+
+## `@deepseek-ai/dsh-experimental-data-agent`
+
+### `benchmark`
+
+提交已核验的最终 SQL 供 BIRD／Spider 评测，可附带答案。工具记录预测，不负责评分。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "sql": {
+      "type": "string",
+      "description": "Final SQL for the evaluation case."
+    },
+    "answer": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sql"
+  ]
+}
+```
+
+源代码：[`packages/experimental/data-agent/src/analysis-tools.ts`](../packages/experimental/data-agent/src/analysis-tools.ts)
+
+### `report`
+
+以 Markdown 内容生成可下载的 Markdown、HTML 或 PDF 报告。每次调用保存新修订。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "markdown": {
+      "type": "string",
+      "description": "Complete report content, including verified values and tables."
+    },
+    "title": {
+      "type": "string"
+    },
+    "formats": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "md",
+          "html",
+          "pdf"
+        ]
+      }
+    },
+    "language": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "markdown",
+    "title",
+    "formats"
+  ]
+}
+```
+
+源代码：[`packages/experimental/data-agent/src/analysis-tools.ts`](../packages/experimental/data-agent/src/analysis-tools.ts)
+
+### `sql`
+
+执行只读 SQL，返回行预览和完整结果文件。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "database": {
+      "type": "string",
+      "description": "Source from the session context; defaults to the selected database."
+    },
+    "sql": {
+      "type": "string"
+    },
+    "params": {
+      "type": "array",
+      "description": "Positional parameter values.",
+      "items": {}
+    },
+    "timeoutMs": {
+      "type": "integer",
+      "description": "Execution timeout in milliseconds; 0 disables the timeout."
+    }
+  },
+  "required": [
+    "sql"
+  ]
+}
+```
+
+源代码：[`packages/experimental/data-agent/src/analysis-tools.ts`](../packages/experimental/data-agent/src/analysis-tools.ts)
+
+SQL 返回预览与完整结果文件；report 将 Markdown 内容生成可下载文件，benchmark 记录评测用的最终 SQL。Preset 增加只读文件检索与澄清，仅启用时开放 benchmark。本目录关闭可选 Web 界面；Web 与 SDK 部署共用工具定义。
 
 <a id="deepseek-aidsh-plugin-manager"></a>
 
@@ -988,7 +1092,7 @@ pwsh 工具是 Windows 组合中 bash 执行器 seam 的 PowerShell 方言消费
 
 ### `read`
 
-读取 UTF-8 文本文件，并返回带行号的内容。
+读取文本文件，并返回带行号的内容。
 
 ```json
 {
@@ -1005,6 +1109,14 @@ pwsh 工具是 Windows 组合中 bash 执行器 seam 的 PowerShell 方言消费
     "limit": {
       "type": "number",
       "description": "Maximum number of lines to return. Defaults to 2000."
+    },
+    "encoding": {
+      "type": "string",
+      "description": "Text encoding. Defaults to utf-8; use windows-1252 for Western legacy text.",
+      "enum": [
+        "utf-8",
+        "windows-1252"
+      ]
     }
   },
   "required": [

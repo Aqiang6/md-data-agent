@@ -1,5 +1,17 @@
 CLAUDE.local.md
 .env
+.env.*
+!.env.example
+!.env.*.example
+.credentials.yaml
+.credentials.yaml.*
+.credentials.yml
+.credentials.yml.*
+/.dsh/
+*.p12
+*.pfx
+*.pem
+*.key
 apps/desktop/.env.windows
 apps/desktop/.env.macos
 apps/desktop/*.p12
@@ -37,6 +49,7 @@ python/**/__pycache__/
 python/**/.pytest_cache/
 packages/**/__pycache__/
 apps/web/dist/
+/apps/dataagent-ui/dist/
 .artifacts/
 .dsh-build/
 .playwright-mcp/
@@ -46,3 +59,40 @@ worktrees/
 .agents/worktrees/
 .typert-*/
 native/system/test/bin/
+# Session-owned Data Agent evidence and evaluation output.
+.data-agent/
+evals/data-agent/output/
+
+# Machine-local providers, databases, business documents and planning drafts.
+/dsh-glm-provider.patch.yml
+/*.local.patch.yml
+/databases/
+/data-agent-docs/
+/data_agent_implementation_design.md
+/data_agent_benchmark_implementation_plan.md
+/scripts/12306-self-test.spec.mjs
+/scripts/check-12306-self-test.mjs
+/scripts/clean-12306-analysis-tables.mjs
+/evals/data-agent/
+
+# Local database files, downloads, reports and benchmark environments.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+/.venv/
+/venv/
+/logs/
+/runs/
+/artifacts/
+/datasets/
+/evals/data-agent/datasets/
+/evals/data-agent/runtime/
+/evals/data-agent/.venv/
+/*.log
+/*.pdf

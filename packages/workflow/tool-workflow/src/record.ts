@@ -42,16 +42,16 @@ export function createWorkflowRecordMirror(ctx: Context): WorkflowRecordMirror {
     if (job === undefined) return
     job.updateProgress(title)
     job.append(`▸ ${title}\n`, { channel: 'log' })
-  })
+  }, { global: true })
   ctx.on('workflow/log', (info, message) => {
     active.get(info.id)?.append(`${message}\n`, { channel: 'log' })
-  })
+  }, { global: true })
   ctx.on('workflow/agent-start', (info, agent) => {
     active.get(info.id)?.append(`agent #${agent.seq} ${agent.label} started\n`, { channel: 'log' })
-  })
+  }, { global: true })
   ctx.on('workflow/agent-end', (info, agent) => {
     active.get(info.id)?.append(`agent #${agent.seq} ${agent.outcome}\n`, { channel: 'log' })
-  })
+  }, { global: true })
 
   return {
     start(runId, job) {

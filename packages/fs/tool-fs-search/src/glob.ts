@@ -261,11 +261,13 @@ function globCardPage(paths: string[], caps: GlobToolCaps, root: string): { item
  * Pending-call presentation: a search card titled by the pattern (and root).
  *
  * @param args - the raw tool arguments; `pattern` and `path` feed the title.
+ * @param toolName - registered discovery name; defaults to glob.
  * @returns the generic card view (`kind: 'search'`) shown while the call runs.
  */
-export function presentGlobCall(args: { pattern: string; path?: string }): GenericCallView {
+export function presentGlobCall(args: { pattern: string; path?: string }, toolName = 'glob'): GenericCallView {
   const where = args.path !== undefined ? ` in ${args.path}` : ''
-  return { card: 'generic', title: `Glob ${args.pattern}${where}`, kind: 'search', rawInput: args.pattern }
+  const label = toolName.charAt(0).toUpperCase() + toolName.slice(1)
+  return { card: 'generic', title: `${label} ${args.pattern}${where}`, kind: 'search', rawInput: args.pattern }
 }
 
 /**
@@ -292,19 +294,20 @@ export function presentGlobResult(_args: { pattern: string; path?: string }, res
  * @param ctx - the plugin context; registrations are effects scoped to it, and
  *   execution uses its `subprocess` service.
  * @param caps - the deployment's resolved glob caps (plugin config after defaulting).
+ * @param toolName - registered discovery name, shared by guidance and result post-processing.
  */
-export function applyGlobTool(ctx: Context, caps: GlobToolCaps): void {
+export function applyGlobTool(ctx: Context, caps: GlobToolCaps, toolName: string): void {
   ctx.systemPrompt.section({
-    name: 'tool:glob',
+    name: `tool:${toolName}`,
     order: ctx.systemPrompt.getSectionOrder('TOOL_GLOB'),
-    text: ({ scope }) => ctx.tools.get('glob', scope) === undefined
+    text: ({ scope }) => ctx.tools.get(toolName, scope) === undefined
       ? ''
-      : 'Use the glob tool — not shell find — to discover files by path pattern.',
+      : `Use the ${toolName} tool — not shell find — to discover files by path pattern.`,
   })
 
   const overCapDescription = caps.sampleOverCapGlobResults ? 'is sampled across top-level entries' : 'keeps the first paths'
   const tool = defineTool({
-    name: 'glob',
+    name: toolName,
     description: 'Find files, not directories, whose paths match a glob pattern, including hidden and ignored files. '
       + `Returns up to ${caps.maxResults} paths in modification-time order; a larger result ${overCapDescription} `
       + 'and reports where the complete list was saved.',
@@ -335,7 +338,7 @@ export function applyGlobTool(ctx: Context, caps: GlobToolCaps): void {
     },
     async execute(args, exec) {
       const input = parseGlobArgs(args)
-      const run = await runRipgrep(ctx, exec, 'glob', buildGlobCommand(input), caps.rawOutputMaxBytes, caps.graceMs, caps.stderrMaxBytes)
+      const run = await runRipgrep(ctx, exec, toolName, buildGlobCommand(input), caps.rawOutputMaxBytes, caps.graceMs, caps.stderrMaxBytes)
       const root = input.path === undefined ? '.' : toWorkdirRelative(input.path, run.workdir)
       if (run.noMatches) return { root, paths: [] }
 
@@ -347,7 +350,7 @@ export function applyGlobTool(ctx: Context, caps: GlobToolCaps): void {
       }
       return { root, paths: all }
     },
-    presentCall: presentGlobCall,
+    presentCall: args => presentGlobCall(args, toolName),
     presentResult: presentGlobResult,
   })
   ctx.tools.register(tool)

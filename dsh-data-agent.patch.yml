@@ -1,0 +1,25 @@
+# Data Agent profile bootstrap template. New profiles use the bundled DeepSeek
+# models; additional providers are configured through the model API editor.
+# DEEPSEEK_API_KEY resolves from credential storage or the launch environment.
+#
+# scripts/prepare-data-agent-profile.ts seeds this into a dedicated profile's
+# mutable user layer once. Do not pass it as --patch when using the model API
+# editor: command-line overrides intentionally refuse settings-page writes.
+
+- id: agent-default-model
+  config:
+    provider: deepseek-official
+    model: deepseek-flash
+
+- id: agent-preset-registry
+  config:
+    default: data-agent
+    selectedDefault: data-agent
+
+- insert:
+    - id: data-agent
+      name: '@deepseek-ai/dsh-experimental-data-agent'
+      config:
+        directory: databases
+    - id: data-agent-preset
+      name: '@deepseek-ai/dsh-experimental-data-agent/preset'

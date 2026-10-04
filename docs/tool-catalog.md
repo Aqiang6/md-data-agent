@@ -15,6 +15,7 @@ This table connects model-visible tool names to the plugin package and service s
 
 | Tool package | Model-visible names | Requires | Writes / affects | Shipped aliases | Deployment note |
 | --- | --- | --- | --- | --- | --- |
+| `@deepseek-ai/dsh-experimental-data-agent` | `benchmark`, `report`, `sql` | `ctx.dataAgent`, `ctx.tools`, `ctx.commands`, `ctx.sessionProjections`, `ctx.systemPrompt`, `ctx.sessions`, `ctx.sessionQuery`, `ctx.llm` | `tool/call`, `tool/result`, `data-agent/request`, `data-agent/request-end`, `Session-owned evidence files` | - | SQL returns a preview and a complete result file; report writes Markdown content as downloadable files and benchmark records the final SQL for evaluation. The preset adds read-only file discovery and clarification, exposing benchmark only when enabled. The catalog disables the optional Web surface; schemas are shared with Web and SDK deployments. |
 | `@deepseek-ai/dsh-plugin-manager` | `plugin_manager` | `ctx.tools`, `ctx.pluginManager`, `ctx.sandboxPolicy` | `tool/call`, `tool/result`, `user/message` | - | - |
 | `@deepseek-ai/dsh-mcp-resources` | `list_mcp_resource_templates`, `list_mcp_resources`, `read_mcp_resource` | `ctx.tools`, `ctx.mcpResources` | `tool/call`, `tool/result` | - | - |
 | `@deepseek-ai/dsh-experimental-browser-use-stagehand-native` | `stagehand_act`, `stagehand_extract`, `stagehand_navigate`, `stagehand_observe`, `stagehand_screenshot`, `stagehand_tabs` | `ctx.browserUse`, `ctx.agents`, `ctx.tools`, `ctx.systemPrompt` | `tool/call`, `tool/result` | - | - |
@@ -45,6 +46,109 @@ This table connects model-visible tool names to the plugin package and service s
 | `@deepseek-ai/dsh-tool-workflow` | `workflow` | `ctx.tools`, `ctx.workflowEngine`, `ctx.systemPrompt`, `a calling Agent (exec.agent parents the script children)` | `tool/call`, `tool/result` | - | - |
 | `@deepseek-ai/dsh-tool-workspace-dependencies` | `load_workspace_dependencies` | `ctx.tools` | `tool/call`, `tool/result` | - | - |
 | `@deepseek-ai/dsh-tool-web` | `web_fetch`, `web_search` | `ctx.tools`, `ctx.web`, `ctx.systemPrompt` | `tool/call`, `tool/result` | - | web_search and web_fetch keep provider selection behind ctx.web so model-visible schemas stay stable across backend swaps. |
+
+<a id="deepseek-aidsh-experimental-data-agent"></a>
+
+## `@deepseek-ai/dsh-experimental-data-agent`
+
+### `benchmark`
+
+Submit the verified final SQL for BIRD/Spider benchmark evaluation, with an optional answer. This records the prediction; it does not score it.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "sql": {
+      "type": "string",
+      "description": "Final SQL for the evaluation case."
+    },
+    "answer": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sql"
+  ]
+}
+```
+
+Source: [`packages/experimental/data-agent/src/analysis-tools.ts`](../packages/experimental/data-agent/src/analysis-tools.ts)
+
+### `report`
+
+Create a report from Markdown content as downloadable Markdown, HTML or PDF. Each call saves a new revision.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "markdown": {
+      "type": "string",
+      "description": "Complete report content, including verified values and tables."
+    },
+    "title": {
+      "type": "string"
+    },
+    "formats": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "md",
+          "html",
+          "pdf"
+        ]
+      }
+    },
+    "language": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "markdown",
+    "title",
+    "formats"
+  ]
+}
+```
+
+Source: [`packages/experimental/data-agent/src/analysis-tools.ts`](../packages/experimental/data-agent/src/analysis-tools.ts)
+
+### `sql`
+
+Run a read-only SQL statement. Returns a row preview and a file containing the complete result.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "database": {
+      "type": "string",
+      "description": "Source from the session context; defaults to the selected database."
+    },
+    "sql": {
+      "type": "string"
+    },
+    "params": {
+      "type": "array",
+      "description": "Positional parameter values.",
+      "items": {}
+    },
+    "timeoutMs": {
+      "type": "integer",
+      "description": "Execution timeout in milliseconds; 0 disables the timeout."
+    }
+  },
+  "required": [
+    "sql"
+  ]
+}
+```
+
+Source: [`packages/experimental/data-agent/src/analysis-tools.ts`](../packages/experimental/data-agent/src/analysis-tools.ts)
+
+SQL returns a preview and a complete result file; report writes Markdown content as downloadable files and benchmark records the final SQL for evaluation. The preset adds read-only file discovery and clarification, exposing benchmark only when enabled. The catalog disables the optional Web surface; schemas are shared with Web and SDK deployments.
 
 <a id="deepseek-aidsh-plugin-manager"></a>
 
@@ -982,7 +1086,7 @@ Source: [`packages/fs/tool-fs/src/index.ts`](../packages/fs/tool-fs/src/index.ts
 
 ### `read`
 
-Read a UTF-8 text file and return line-numbered content.
+Read a text file and return line-numbered content.
 
 ```json
 {
@@ -999,6 +1103,14 @@ Read a UTF-8 text file and return line-numbered content.
     "limit": {
       "type": "number",
       "description": "Maximum number of lines to return. Defaults to 2000."
+    },
+    "encoding": {
+      "type": "string",
+      "description": "Text encoding. Defaults to utf-8; use windows-1252 for Western legacy text.",
+      "enum": [
+        "utf-8",
+        "windows-1252"
+      ]
     }
   },
   "required": [

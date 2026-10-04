@@ -75,9 +75,9 @@ kind: "package-reference"
 
 ### 持久会话记录
 
-对于根 transport 执行（`exec.parent` 缺省），工具会用四个 log-only 事件把运行投影到调用方 agent 的会话：`start()` 返回后写 run-start，只记录 `run.id` 匹配的成员开始与结束，并且只在结果可用且 dispose 完全停稳后写 run-end。嵌套 transport 调用照常执行，但不写任何记录。会话追加操作首次失败后，本运行会停止后续记录并只告警一次，留下空记录或合法连续前缀，同时不改变工具结果和清理。包 invariant 会在冷加载与实时追加时拒绝重复 start、未配对成员、仍有开放成员的终点与 run-end 后更新，同时允许缺失终态后缀的连续前缀。
+对于根 transport 执行（`exec.parent` 缺省），工具在调用方 Agent 的 Session 中记录运行与成员生命周期，以及阶段和日志进度。run-start 在 `start()` 后记录；run-end 在结果可用且释放停稳后记录。事件按 `run.id` 过滤。嵌套 transport 调用不写记录。首次追加失败后停止记录并告警一次，不改变执行和清理。invariant 拒绝重复开始、未配对成员、仍有开放成员的终点、没有开放运行的进度及 run-end 后更新；未完成的连续前缀仍然有效。
 
-引擎的 `workflow/phase` 与 `workflow/log` 事件在本工具没有逐行的持久面：会话日志刻意只记录 run 与成员生命周期，Web transcript 由这些记录派生。后台运行的这些行改经任务观察 record 抵达人类，而 record 的瞬态是设计使然。
+运行开始记录包含调用工具的 `callId`，执行检查器据此把运行挂到真实工具节点；缺少该字段的历史记录独立展示，不按时间猜测关联。阶段与日志观测携带 `ignorable: true`，不增加模型消息。执行检查器通过这些持久记录展示历史进度；后台任务输出继续使用原有的瞬态环。
 
 ### 渲染意图
 
@@ -89,7 +89,7 @@ kind: "package-reference"
 |---|---|
 | [`src/index.ts`](src/index.ts) | 插件入口：工具注册、运行生命周期、后台任务注册、记录器接线 |
 | [`src/record.ts`](src/record.ts) | 后台运行进任务输出环的实时进度镜像 |
-| [`src/types.ts`](src/types.ts) | 四个 log-only 记录事件 payload 及其 `SessionEventMap` 声明 |
+| [`src/types.ts`](src/types.ts) | 运行、成员与进度事件声明 |
 | [`src/invariant.ts`](src/invariant.ts) | 不变式配套入口：持久工作流记录协议校验 |
 
 </details>
